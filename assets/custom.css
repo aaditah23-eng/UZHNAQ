@@ -1,0 +1,60 @@
+/* Ultra-Safe Premium Aesthetic Overrides */
+:root {
+  --bg-black: #050505;
+  --bg-panel: #0f0f11;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --text-primary: #f2f2f2;
+  --text-secondary: #909090;
+  --accent: #dcf636;
+}
+
+/* 
+  CRITICAL: Do not use !important on padding, margin, line-height, letter-spacing, 
+  font-weight, or transform. The site generator strictly relies on precise bounding boxes 
+  for pointer-events, click targets, and drag bounds.
+*/
+
+html, body, #main {
+  background-color: var(--bg-black) !important;
+}
+
+body {
+  color: var(--text-primary) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+/* Color overrides ONLY */
+h1.uzhnaq-text, h2.uzhnaq-text, h3.uzhnaq-text, h4.uzhnaq-text, h5.uzhnaq-text, h6.uzhnaq-text {
+  color: var(--text-primary) !important;
+}
+
+p.uzhnaq-text, div.uzhnaq-text {
+  color: var(--text-secondary) !important;
+}
+
+/* Card and container color overrides */
+[style*="background-color: white"], 
+[style*="background-color: #fff"], 
+[style*="background-color: rgb(255, 255, 255)"] {
+  background-color: var(--bg-panel) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Remove gradient overlays causing weird colors on slideshow */
+.static-slide-caption {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+}
+
+.static-slide-index {
+  color: var(--text-primary) !important;
+}
+
+/* Elegant selection */
+::selection {
+  background: var(--text-primary);
+  color: #000;
+}
