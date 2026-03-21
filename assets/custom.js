@@ -328,6 +328,8 @@ document.addEventListener("DOMContentLoaded", () => {
   highlightActiveLinks();
   initializeDropdowns();
   initializeEnquiryForms();
+  syncHomepageHeroContentPolish();
+  syncHomepageHeroMachine();
   initializeFooterEnhancements();
   initializeHomepageHeroBrochureCtas();
   if (shouldMountHomepageInjectedSections) {
@@ -392,32 +394,48 @@ document.addEventListener("DOMContentLoaded", () => {
     return d;
   }
 
-  function buildGearSpokesMarkup({
-    cx,
-    cy,
-    outerRadius,
-    coreRadius,
-    spokes,
-  }) {
-    const spokeWidth = Math.max(12, Math.round(coreRadius * 0.48));
-    const outerReach = Math.max(coreRadius + 24, outerRadius - 24);
-    const spokeHeight = Math.max(outerReach - coreRadius, 42);
-    const spokeX = cx - spokeWidth / 2;
-    const spokeY = cy - outerReach;
+  function buildGearSpokesMarkup({ cx, cy, coreRadius, spokes, spokeOrbit }) {
+    const spokeWidth = Math.max(14, Math.round(coreRadius * 0.62));
+    const capRadius = Number(Math.max(spokeWidth * 0.72, 14).toFixed(2));
+    const armTop = Number((cy - spokeOrbit + capRadius * 0.2).toFixed(2));
+    const armBottom = Number((cy - (coreRadius + 8)).toFixed(2));
+    const armHeight = Number(Math.max(armBottom - armTop, 26).toFixed(2));
+    const spokeX = Number((cx - spokeWidth / 2).toFixed(2));
+    const highlightX = Number((cx - spokeWidth * 0.16).toFixed(2));
+    const capY = Number((cy - spokeOrbit).toFixed(2));
+    const armCenterX = cx.toFixed(2);
 
     return Array.from({ length: spokes })
       .map((_, index) => {
         const angle = (360 / spokes) * index;
         return `
-          <rect
-            class="site-home-hero-machine-spoke"
-            x="${spokeX.toFixed(2)}"
-            y="${spokeY.toFixed(2)}"
-            width="${spokeWidth}"
-            height="${spokeHeight.toFixed(2)}"
-            rx="${Math.max(spokeWidth / 2, 8).toFixed(2)}"
+          <g
+            class="site-home-hero-machine-spoke-assembly"
             transform="rotate(${angle.toFixed(2)} ${cx} ${cy})"
-          ></rect>
+          >
+            <circle
+              class="site-home-hero-machine-spoke-cap"
+              cx="${cx}"
+              cy="${capY}"
+              r="${capRadius}"
+            ></circle>
+            <rect
+              class="site-home-hero-machine-spoke"
+              x="${spokeX}"
+              y="${armTop}"
+              width="${spokeWidth}"
+              height="${armHeight}"
+              rx="${Math.max(spokeWidth / 2, 9).toFixed(2)}"
+            ></rect>
+            <path
+              class="site-home-hero-machine-spoke-highlight"
+              d="M ${armCenterX} ${(armTop + 7).toFixed(2)} L ${armCenterX} ${(armTop + armHeight - 8).toFixed(2)}"
+            ></path>
+            <path
+              class="site-home-hero-machine-spoke-shadow"
+              d="M ${highlightX} ${(armTop + 9).toFixed(2)} L ${highlightX} ${(armTop + armHeight - 10).toFixed(2)}"
+            ></path>
+          </g>
         `;
       })
       .join("");
@@ -447,14 +465,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const secondaryRingRadius = Math.max(config.coreRadius + 12, ringRadius - 28);
     const accentRadius = Math.max(config.coreRadius + 10, secondaryRingRadius - 26);
     const boltOrbit = Math.max(config.coreRadius + 24, secondaryRingRadius - 8);
+    const faceRadius = Number((ringRadius - 7).toFixed(2));
+    const innerFaceRadius = Number((secondaryRingRadius - 8).toFixed(2));
+    const outerHighlightRadius = Number((config.outerRadius - 9).toFixed(2));
+    const neonOuterRadius = Number((outerHighlightRadius - 10).toFixed(2));
+    const neonInnerRadius = Number((Math.max(config.coreRadius + 28, secondaryRingRadius - 24)).toFixed(2));
+    const reflectionRadiusX = Number((config.outerRadius * 0.72).toFixed(2));
+    const reflectionRadiusY = Number((config.outerRadius * 0.28).toFixed(2));
+    const reflectionCx = Number((config.cx - config.outerRadius * 0.1).toFixed(2));
+    const reflectionCy = Number((config.cy - config.outerRadius * 0.24).toFixed(2));
+    const shadowCx = Number((config.cx + config.outerRadius * 0.08).toFixed(2));
+    const shadowCy = Number((config.cy + config.outerRadius * 0.1).toFixed(2));
+    const shadowRadius = Number((config.outerRadius * 0.9).toFixed(2));
 
     return `
-      <g class="site-home-hero-machine-gear ${config.className}" data-home-hero-reveal="true">
+      <g class="site-home-hero-machine-gear ${config.className}">
+        <circle
+          class="site-home-hero-machine-gear-shadow-disc"
+          cx="${shadowCx}"
+          cy="${shadowCy}"
+          r="${shadowRadius}"
+        ></circle>
         <path
           class="site-home-hero-machine-gear-body"
           fill-rule="evenodd"
           d="${outlinePath}"
         ></path>
+        <circle
+          class="site-home-hero-machine-gear-face"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${faceRadius}"
+        ></circle>
+        <circle
+          class="site-home-hero-machine-gear-face-inner"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${innerFaceRadius}"
+        ></circle>
         <circle
           class="site-home-hero-machine-gear-ring"
           cx="${config.cx}"
@@ -470,14 +518,14 @@ document.addEventListener("DOMContentLoaded", () => {
         ${buildGearSpokesMarkup({
           cx: config.cx,
           cy: config.cy,
-          outerRadius: ringRadius,
           coreRadius: accentRadius,
           spokes: config.spokes,
+          spokeOrbit: boltOrbit,
         })}
         ${buildGearBoltsMarkup({
           cx: config.cx,
           cy: config.cy,
-          bolts: config.bolts,
+          bolts: config.spokes,
           boltOrbit,
         })}
         <circle
@@ -500,6 +548,40 @@ document.addEventListener("DOMContentLoaded", () => {
             2,
           )}"
         ></circle>
+        <circle
+          class="site-home-hero-machine-gear-highlight-ring"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${outerHighlightRadius}"
+        ></circle>
+        <circle
+          class="site-home-hero-machine-gear-neon-ring site-home-hero-machine-gear-neon-ring--outer"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${neonOuterRadius}"
+        ></circle>
+        <circle
+          class="site-home-hero-machine-gear-neon-ring site-home-hero-machine-gear-neon-ring--inner"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${neonInnerRadius}"
+        ></circle>
+        <ellipse
+          class="site-home-hero-machine-gear-reflection"
+          cx="${reflectionCx}"
+          cy="${reflectionCy}"
+          rx="${reflectionRadiusX}"
+          ry="${reflectionRadiusY}"
+          transform="rotate(-18 ${config.cx} ${config.cy})"
+        ></ellipse>
+        <ellipse
+          class="site-home-hero-machine-gear-reflection site-home-hero-machine-gear-reflection--inner"
+          cx="${reflectionCx}"
+          cy="${Number((reflectionCy + config.outerRadius * 0.1).toFixed(2))}"
+          rx="${Number((reflectionRadiusX * 0.72).toFixed(2))}"
+          ry="${Number((reflectionRadiusY * 0.58).toFixed(2))}"
+          transform="rotate(-18 ${config.cx} ${config.cy})"
+        ></ellipse>
       </g>
     `;
   }
@@ -508,55 +590,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const gearConfigs = [
       {
         className: "site-home-hero-machine-gear--alpha",
-        cx: 700,
-        cy: 290,
-        outerRadius: 156,
-        coreRadius: 44,
-        toothCount: 18,
-        toothDepth: 22,
+        cx: 736,
+        cy: 274,
+        outerRadius: 176,
+        coreRadius: 46,
+        toothCount: 20,
+        toothDepth: 24,
         spokes: 6,
-        bolts: 6,
-      },
-      {
-        className: "site-home-hero-machine-gear--beta",
-        cx: 520,
-        cy: 154,
-        outerRadius: 86,
-        coreRadius: 26,
-        toothCount: 14,
-        toothDepth: 14,
-        spokes: 5,
         bolts: 5,
       },
       {
         className: "site-home-hero-machine-gear--gamma",
-        cx: 526,
-        cy: 470,
-        outerRadius: 114,
-        coreRadius: 32,
-        toothCount: 16,
-        toothDepth: 16,
+        cx: 544,
+        cy: 500,
+        outerRadius: 134,
+        coreRadius: 36,
+        toothCount: 17,
+        toothDepth: 18,
         spokes: 5,
         bolts: 5,
       },
       {
         className: "site-home-hero-machine-gear--delta",
-        cx: 700,
-        cy: 676,
-        outerRadius: 74,
-        coreRadius: 24,
-        toothCount: 12,
-        toothDepth: 12,
+        cx: 720,
+        cy: 736,
+        outerRadius: 96,
+        coreRadius: 28,
+        toothCount: 14,
+        toothDepth: 14,
         spokes: 4,
         bolts: 4,
       },
     ];
     const routePaths = [
-      "M 520 154 C 575 166 620 197 661 242",
-      "M 526 470 C 584 493 633 536 682 596",
-      "M 700 70 L 700 834",
-      "M 738 362 C 776 408 787 470 756 556",
-      "M 700 556 L 700 742",
+      "M 544 500 C 610 520 655 561 694 618",
+      "M 704 68 L 704 840",
+      "M 780 332 C 798 388 792 460 758 548",
     ];
     const routeMarkup = routePaths
       .map(
@@ -568,16 +637,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `,
       )
       .join("");
-    const boltPairs = [
-      [446, 88],
-      [842, 88],
-      [446, 808],
-      [842, 808],
-      [470, 220],
-      [784, 220],
-      [470, 716],
-      [784, 716],
-    ];
 
     return `
       <div class="site-home-hero-machine" data-site-home-hero-machine-mounted="true">
@@ -594,21 +653,46 @@ document.addEventListener("DOMContentLoaded", () => {
           >
             <defs>
               <linearGradient id="site-home-hero-metal" x1="10%" y1="5%" x2="88%" y2="92%">
-                <stop offset="0%" stop-color="#fbfcff"></stop>
-                <stop offset="16%" stop-color="#8d96a5"></stop>
-                <stop offset="48%" stop-color="#212935"></stop>
-                <stop offset="76%" stop-color="#596474"></stop>
-                <stop offset="100%" stop-color="#0d1118"></stop>
+                <stop offset="0%" stop-color="#f7fbff"></stop>
+                <stop offset="10%" stop-color="#cbd4df"></stop>
+                <stop offset="42%" stop-color="#566171"></stop>
+                <stop offset="68%" stop-color="#171f29"></stop>
+                <stop offset="100%" stop-color="#070a10"></stop>
               </linearGradient>
               <linearGradient id="site-home-hero-metal-dark" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#27303d"></stop>
-                <stop offset="52%" stop-color="#0f141c"></stop>
+                <stop offset="0%" stop-color="#2d3643"></stop>
+                <stop offset="34%" stop-color="#151b24"></stop>
+                <stop offset="72%" stop-color="#090c12"></stop>
                 <stop offset="100%" stop-color="#040608"></stop>
               </linearGradient>
+              <radialGradient id="site-home-hero-metal-face" cx="34%" cy="26%" r="78%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.96"></stop>
+                <stop offset="18%" stop-color="#dbe1eb" stop-opacity="0.96"></stop>
+                <stop offset="48%" stop-color="#768292" stop-opacity="0.92"></stop>
+                <stop offset="76%" stop-color="#202731" stop-opacity="0.96"></stop>
+                <stop offset="100%" stop-color="#0a0d12" stop-opacity="1"></stop>
+              </radialGradient>
+              <radialGradient id="site-home-hero-metal-face-inner" cx="42%" cy="34%" r="70%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.42"></stop>
+                <stop offset="44%" stop-color="#8490a1" stop-opacity="0.18"></stop>
+                <stop offset="100%" stop-color="#121820" stop-opacity="0.12"></stop>
+              </radialGradient>
+              <linearGradient id="site-home-hero-black-oxide" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1b232d"></stop>
+                <stop offset="38%" stop-color="#0f151d"></stop>
+                <stop offset="100%" stop-color="#04070b"></stop>
+              </linearGradient>
               <linearGradient id="site-home-hero-brass" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#f2d7a2"></stop>
-                <stop offset="42%" stop-color="#987345"></stop>
-                <stop offset="100%" stop-color="#352515"></stop>
+                <stop offset="0%" stop-color="#fde9ba"></stop>
+                <stop offset="18%" stop-color="#f0c974"></stop>
+                <stop offset="46%" stop-color="#af8248"></stop>
+                <stop offset="100%" stop-color="#3d2a16"></stop>
+              </linearGradient>
+              <linearGradient id="site-home-hero-gear-neon" x1="8%" y1="0%" x2="92%" y2="100%">
+                <stop offset="0%" stop-color="#dff969" stop-opacity="0.95"></stop>
+                <stop offset="32%" stop-color="#fbfcff" stop-opacity="0.82"></stop>
+                <stop offset="62%" stop-color="#6df8dd" stop-opacity="0.88"></stop>
+                <stop offset="100%" stop-color="#4f92ff" stop-opacity="0.94"></stop>
               </linearGradient>
               <linearGradient id="site-home-hero-beam" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stop-color="#fbfcff"></stop>
@@ -630,98 +714,85 @@ document.addEventListener("DOMContentLoaded", () => {
               <filter id="site-home-hero-beam-blur" x="-80%" y="-80%" width="260%" height="260%">
                 <feGaussianBlur stdDeviation="10"></feGaussianBlur>
               </filter>
+              <filter id="site-home-hero-gear-neon-blur" x="-120%" y="-120%" width="340%" height="340%">
+                <feGaussianBlur stdDeviation="4.8"></feGaussianBlur>
+              </filter>
             </defs>
-            <g class="site-home-hero-machine-stage">
+              <g class="site-home-hero-machine-stage">
               <g class="site-home-hero-machine-plate-stack" data-home-hero-reveal="true">
                 <rect
                   class="site-home-hero-machine-plate site-home-hero-machine-plate--outer"
-                  x="418"
-                  y="36"
-                  width="458"
-                  height="828"
+                  x="434"
+                  y="42"
+                  width="424"
+                  height="812"
                   rx="44"
                 ></rect>
                 <rect
                   class="site-home-hero-machine-plate site-home-hero-machine-plate--inner"
-                  x="472"
-                  y="86"
-                  width="304"
-                  height="698"
+                  x="484"
+                  y="94"
+                  width="274"
+                  height="674"
                   rx="30"
                 ></rect>
                 <rect
                   class="site-home-hero-machine-plate site-home-hero-machine-plate--spine"
-                  x="661"
-                  y="30"
-                  width="78"
-                  height="840"
+                  x="670"
+                  y="34"
+                  width="68"
+                  height="830"
                   rx="39"
                 ></rect>
                 <circle
                   class="site-home-hero-machine-plate-glow site-home-hero-machine-plate-glow--lime"
-                  cx="702"
-                  cy="292"
-                  r="228"
+                  cx="724"
+                  cy="278"
+                  r="204"
                 ></circle>
                 <circle
                   class="site-home-hero-machine-plate-glow site-home-hero-machine-plate-glow--blue"
-                  cx="706"
-                  cy="676"
-                  r="152"
+                  cx="718"
+                  cy="730"
+                  r="138"
                 ></circle>
               </g>
               <g class="site-home-hero-machine-structure" data-home-hero-reveal="true">
-                <path class="site-home-hero-machine-rail" d="M 308 154 L 484 202"></path>
-                <path class="site-home-hero-machine-rail" d="M 312 188 L 470 230"></path>
-                <path class="site-home-hero-machine-rail" d="M 316 468 L 490 462"></path>
-                <path class="site-home-hero-machine-rail" d="M 318 506 L 480 520"></path>
-                <path class="site-home-hero-machine-rail site-home-hero-machine-rail--accent" d="M 834 168 L 834 742"></path>
-                <circle class="site-home-hero-machine-bearing" cx="700" cy="290" r="198"></circle>
-                <circle class="site-home-hero-machine-bearing" cx="700" cy="676" r="104"></circle>
-                <path class="site-home-hero-machine-panel-line" d="M 508 118 L 742 118"></path>
-                <path class="site-home-hero-machine-panel-line" d="M 506 760 L 742 760"></path>
+                <path class="site-home-hero-machine-rail" d="M 326 472 L 494 464"></path>
+                <path class="site-home-hero-machine-rail" d="M 332 510 L 478 522"></path>
+                <path class="site-home-hero-machine-rail site-home-hero-machine-rail--accent" d="M 826 168 L 826 748"></path>
+                <circle class="site-home-hero-machine-bearing" cx="736" cy="274" r="208"></circle>
+                <circle class="site-home-hero-machine-bearing" cx="720" cy="736" r="120"></circle>
+                <path class="site-home-hero-machine-panel-line" d="M 496 122 L 742 122"></path>
+                <path class="site-home-hero-machine-panel-line" d="M 498 422 L 742 422"></path>
+                <path class="site-home-hero-machine-panel-line" d="M 500 760 L 738 760"></path>
               </g>
               <g class="site-home-hero-machine-beam" data-home-hero-reveal="true">
                 <rect
                   class="site-home-hero-machine-beam-housing"
-                  x="665"
-                  y="44"
-                  width="70"
-                  height="820"
+                  x="672"
+                  y="48"
+                  width="64"
+                  height="808"
                   rx="35"
                 ></rect>
-                <path class="site-home-hero-machine-beam-sheath site-home-hero-machine-beam-sheath--left" d="M 684 58 L 684 842"></path>
-                <path class="site-home-hero-machine-beam-sheath site-home-hero-machine-beam-sheath--right" d="M 716 58 L 716 842"></path>
-                <path class="site-home-hero-machine-beam-glow" d="M 700 52 L 700 848"></path>
-                <path class="site-home-hero-machine-beam-core" d="M 700 74 L 700 826"></path>
+                <path class="site-home-hero-machine-beam-sheath site-home-hero-machine-beam-sheath--left" d="M 690 66 L 690 838"></path>
+                <path class="site-home-hero-machine-beam-sheath site-home-hero-machine-beam-sheath--right" d="M 718 66 L 718 838"></path>
+                <path class="site-home-hero-machine-beam-glow" d="M 704 58 L 704 846"></path>
+                <path class="site-home-hero-machine-beam-core" d="M 704 80 L 704 824"></path>
                 ${routeMarkup}
               </g>
               ${gearConfigs.map((config) => buildHomepageHeroGearMarkup(config)).join("")}
               <g class="site-home-hero-machine-clamps" data-home-hero-reveal="true">
-                <rect class="site-home-hero-machine-clamp-block" x="612" y="92" width="176" height="54" rx="22"></rect>
-                <rect class="site-home-hero-machine-clamp-arm site-home-hero-machine-clamp-arm--wide" x="576" y="116" width="242" height="14" rx="7"></rect>
-                <rect class="site-home-hero-machine-clamp-block" x="616" y="582" width="168" height="58" rx="24"></rect>
-                <rect class="site-home-hero-machine-clamp-arm" x="588" y="606" width="224" height="16" rx="8"></rect>
-                <rect class="site-home-hero-machine-clamp-block" x="624" y="742" width="152" height="68" rx="24"></rect>
-                <rect class="site-home-hero-machine-clamp-arm site-home-hero-machine-clamp-arm--narrow" x="602" y="770" width="196" height="14" rx="7"></rect>
+                <rect class="site-home-hero-machine-clamp-block" x="622" y="98" width="150" height="44" rx="18"></rect>
+                <rect class="site-home-hero-machine-clamp-arm site-home-hero-machine-clamp-arm--wide" x="594" y="114" width="206" height="12" rx="6"></rect>
+                <rect class="site-home-hero-machine-clamp-block" x="626" y="600" width="148" height="52" rx="22"></rect>
+                <rect class="site-home-hero-machine-clamp-arm" x="602" y="620" width="196" height="12" rx="6"></rect>
               </g>
               <g class="site-home-hero-machine-indicators" data-home-hero-reveal="true">
-                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--amber" cx="812" cy="150" r="8"></circle>
-                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--red" cx="812" cy="178" r="6"></circle>
-                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--white" cx="812" cy="208" r="6"></circle>
-                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--blue" cx="812" cy="604" r="7"></circle>
-              </g>
-              <g class="site-home-hero-machine-bolt-pairs" data-home-hero-reveal="true">
-                ${boltPairs
-                  .map(
-                    ([cx, cy]) => `
-                      <g class="site-home-hero-machine-bolt">
-                        <circle cx="${cx}" cy="${cy}" r="9"></circle>
-                        <circle cx="${cx}" cy="${cy}" r="4"></circle>
-                      </g>
-                    `,
-                  )
-                  .join("")}
+                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--amber" cx="804" cy="152" r="7"></circle>
+                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--white" cx="804" cy="178" r="5"></circle>
+                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--blue" cx="804" cy="608" r="6"></circle>
               </g>
             </g>
           </svg>
@@ -812,6 +883,37 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     playHomepageHeroMachineIntro(placeholder);
+  }
+
+  function syncHomepageHeroContentPolish() {
+    if (currentPath !== "index.html") {
+      return;
+    }
+
+    document
+      .querySelectorAll(".uzhnaq-10mrn1k .uzhnaq-text")
+      .forEach((node) => {
+        if (
+          node instanceof HTMLElement &&
+          /performace/i.test(node.textContent || "")
+        ) {
+          node.textContent = "PERFORMANCE";
+        }
+      });
+
+    document
+      .querySelectorAll(".uzhnaq-4t8071, .uzhnaq-l9l7f4")
+      .forEach((element) => {
+        if (element instanceof HTMLElement) {
+          element.classList.add("site-home-hide-decor");
+        }
+      });
+
+    document.querySelectorAll(".uzhnaq-1gltdb").forEach((element) => {
+      if (element instanceof HTMLElement) {
+        element.classList.add("site-home-copy-clean");
+      }
+    });
   }
 
   function buildIndustriesShowcaseMarkup() {
