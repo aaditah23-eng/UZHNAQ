@@ -1,12 +1,26 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const currentPath = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
-  const prefersHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const currentPath = (
+    window.location.pathname.split("/").pop() || "index.html"
+  ).toLowerCase();
+  const isExperimentHomepage = currentPath === "index-experiment.html";
+  const homepagePaths = new Set(["index.html", "index-experiment.html"]);
+  const isHomepageLike = homepagePaths.has(currentPath);
+  const shouldMountHomepageTitleAccent = currentPath === "index.html";
+  const shouldMountHomepageInjectedSections =
+    isHomepageLike && !isExperimentHomepage;
+  const prefersHover = window.matchMedia(
+    "(hover: hover) and (pointer: fine)",
+  ).matches;
   const isFileProtocol = window.location.protocol === "file:";
-  const pageOrigin = /^https?:/i.test(window.location.origin || "") ? window.location.origin : "";
+  const pageOrigin = /^https?:/i.test(window.location.origin || "")
+    ? window.location.origin
+    : "";
   const siteResourceConfig = {
     brochure: {
-      viewUrl: "https://drive.google.com/file/d/1TUeSqrF_R89I4VUyZLpKcrgpXgdqXuC4/view?usp=drivesdk",
-      downloadUrl: "https://drive.google.com/uc?export=download&id=1TUeSqrF_R89I4VUyZLpKcrgpXgdqXuC4",
+      viewUrl:
+        "https://drive.google.com/file/d/1TUeSqrF_R89I4VUyZLpKcrgpXgdqXuC4/view?usp=drivesdk",
+      downloadUrl:
+        "https://drive.google.com/uc?export=download&id=1TUeSqrF_R89I4VUyZLpKcrgpXgdqXuC4",
     },
     social: {
       youtube: "https://youtube.com/@uzhnaqtechnologypvtltd",
@@ -17,19 +31,22 @@ document.addEventListener("DOMContentLoaded", () => {
         id: "gY1X9zkKRNU",
         title: "UZHNAQ TECHNOLOGY PVT LTD",
         eyebrow: "Company Story",
-        description: "A concise introduction to UZHNAQ Technology, our capabilities, and the precision mindset behind every component.",
+        description:
+          "A concise introduction to UZHNAQ Technology, our capabilities, and the precision mindset behind every component.",
       },
       {
         id: "mhKvjHgMpLw",
         title: "Factory Highlights",
         eyebrow: "Factory Tour",
-        description: "A closer look at the production environment, machinery, and the manufacturing discipline that powers our exports.",
+        description:
+          "A closer look at the production environment, machinery, and the manufacturing discipline that powers our exports.",
       },
       {
         id: "IzcgKQa2tWQ",
         title: "Heat Treatment",
         eyebrow: "Process Focus",
-        description: "See how advanced heat-treatment capabilities strengthen durability, consistency, and performance in critical parts.",
+        description:
+          "See how advanced heat-treatment capabilities strengthen durability, consistency, and performance in critical parts.",
       },
     ],
     socialHub: {
@@ -45,17 +62,20 @@ document.addEventListener("DOMContentLoaded", () => {
         {
           shortcode: "DRORgo8D6tN",
           label: "Workshop Update",
-          caption: "Transmission, reverse engineering, and gear development from the latest shop-floor post.",
+          caption:
+            "Transmission, reverse engineering, and gear development from the latest shop-floor post.",
         },
         {
           shortcode: "DD_YGHVvSUI",
           label: "Component Spotlight",
-          caption: "A recent production snapshot showing precision-machined components ready for the next stage.",
+          caption:
+            "A recent production snapshot showing precision-machined components ready for the next stage.",
         },
         {
           shortcode: "DByBsQbPqGv",
           label: "Team Update",
-          caption: "A recent company update shared through the official Instagram profile.",
+          caption:
+            "A recent company update shared through the official Instagram profile.",
         },
       ],
     },
@@ -183,24 +203,61 @@ document.addEventListener("DOMContentLoaded", () => {
       triggerId: "undefined-1njxbrf",
       lead: "Quick links to the story, direction, and people behind UZHNAQ.",
       items: [
-        { title: "Our Mission", subtitle: "What drives the company", href: "./about.html#mission" },
-        { title: "Our Vision", subtitle: "Where we are heading", href: "./about.html#vision" },
-        { title: "Our Promise", subtitle: "Quality and delivery standards", href: "./about.html#promise" },
-        { title: "Leadership Team", subtitle: "Meet the people behind UZHNAQ", href: "./about.html#team" },
+        {
+          title: "Our Mission",
+          subtitle: "What drives the company",
+          href: "./about.html#mission",
+        },
+        {
+          title: "Our Vision",
+          subtitle: "Where we are heading",
+          href: "./about.html#vision",
+        },
+        {
+          title: "Our Promise",
+          subtitle: "Quality and delivery standards",
+          href: "./about.html#promise",
+        },
+        {
+          title: "Leadership Team",
+          subtitle: "Meet the people behind UZHNAQ",
+          href: "./about.html#team",
+        },
       ],
     },
     Products: {
       triggerId: "undefined-14p26ei",
       lead: "Jump directly to core drivetrain and transmission components.",
       items: [
-        { title: "Main Drive", subtitle: "Heavy-duty gear systems", href: "./products.html#maindrive" },
-        { title: "Differential Gear", subtitle: "Balanced torque transfer", href: "./products.html#differentialgear" },
-        { title: "Planet Gear", subtitle: "Compact power distribution", href: "./products.html#planetgear" },
-        { title: "Synchro Assembly", subtitle: "Smooth shifting components", href: "./products.html#synchroassembly" },
+        {
+          title: "Main Drive",
+          subtitle: "Heavy-duty gear systems",
+          href: "./products.html#maindrive",
+        },
+        {
+          title: "Differential Gear",
+          subtitle: "Balanced torque transfer",
+          href: "./products.html#differentialgear",
+        },
+        {
+          title: "Planet Gear",
+          subtitle: "Compact power distribution",
+          href: "./products.html#planetgear",
+        },
+        {
+          title: "Synchro Assembly",
+          subtitle: "Smooth shifting components",
+          href: "./products.html#synchroassembly",
+        },
       ],
     },
   };
   let footerAnchorSyncRegistered = false;
+  const responsiveNavBreakpoint = window.matchMedia("(max-width: 1199px)");
+  let responsiveFoundationRefreshQueued = false;
+  let responsiveFoundationListenersRegistered = false;
+  const responsiveDropdownStates = [];
+  let responsiveDropdownGlobalsRegistered = false;
   const inlineFooterIcons = {
     world: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18"/><path d="M12 3a15.3 15.3 0 0 1 4 9 15.3 15.3 0 0 1-4 9 15.3 15.3 0 0 1-4-9 15.3 15.3 0 0 1 4-9Z"/><path d="M20 7.5A11 11 0 0 0 4 7.5"/><path d="M20 16.5A11 11 0 0 1 4 16.5"/></svg>`,
     mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>`,
@@ -219,6 +276,53 @@ document.addEventListener("DOMContentLoaded", () => {
     globeArrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="12" r="7.5"/><path d="M3.5 12H18"/><path d="M11 4.5c1.8 2 2.8 4.7 2.8 7.5s-1 5.5-2.8 7.5c-1.8-2-2.8-4.7-2.8-7.5s1-5.5 2.8-7.5Z"/><path d="m15.8 5.8 4.7.2-.2 4.7"/><path d="m20.4 6-5.1 5.1"/></svg>`,
     heat: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.4 3.5c1.3 2.1 1.5 4.1.5 5.9-.7 1.2-.5 2.4.5 3.4 1.6-1 2.6-2.8 2.6-4.8 2.2 1.6 3.5 4 3.5 6.7 0 3.8-3 6.8-7 6.8s-7-3-7-6.8c0-2.8 1.5-5.4 4-7 .1 1.7.7 3 1.9 4 .8-1 .9-2.2.5-3.6-.4-1.4-.2-2.9.5-4.6Z"/></svg>`,
   };
+  const industriesShowcaseCards = [
+    {
+      title: "Automotive",
+      eyebrow: "Powertrain",
+      copy: "Precision gears and shafts for driveline assemblies, tooling, and high-repeatability automotive production systems.",
+    },
+    {
+      title: "Electric Vehicles",
+      eyebrow: "E-Mobility",
+      copy: "Compact, accuracy-driven components for EV transmissions, charging hardware, and next-generation mobility platforms.",
+    },
+    {
+      title: "Heavy & Light Duty Vehicles",
+      eyebrow: "Commercial",
+      copy: "Durable parts engineered for demanding torque loads across trucks, utility vehicles, and transport fleets.",
+    },
+    {
+      title: "Material Handling",
+      eyebrow: "Industrial Flow",
+      copy: "Reliable motion components for conveyors, lifting systems, warehouse automation, and shop-floor logistics.",
+    },
+    {
+      title: "Oil & Gas",
+      eyebrow: "Harsh Duty",
+      copy: "Robust drivetrain-ready parts suited to pump systems, process equipment, and tough operating environments.",
+    },
+    {
+      title: "Agriculture",
+      eyebrow: "Field Equipment",
+      copy: "Dependable gearing for tillage, harvesting, and off-road machinery where uptime and torque consistency matter.",
+    },
+    {
+      title: "Construction",
+      eyebrow: "High Load",
+      copy: "Heavy-duty engineered components for mixers, compactors, earthmoving support systems, and site equipment.",
+    },
+    {
+      title: "Railway Sector",
+      eyebrow: "Transit",
+      copy: "Precision-machined parts aligned to railway and mobility applications that demand repeatability and long service life.",
+    },
+  ];
+  const machinesOverviewHighlights = [
+    "Responsive machine catalogue coming soon",
+    "Clearer machine groups and process coverage",
+    "Faster path to brochure and enquiry actions",
+  ];
 
   decorateHeaderNavigation();
   highlightActiveLinks();
@@ -226,9 +330,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeEnquiryForms();
   initializeFooterEnhancements();
   initializeHomepageHeroBrochureCtas();
-  initializeHomepageFactsGallery();
-  initializeHomepageVideoGallery();
-  initializeHomepageSocialHub();
+  if (shouldMountHomepageInjectedSections) {
+    initializeHomepageFactsGallery();
+    initializeHomepageVideoGallery();
+    initializeHomepageSocialHub();
+  }
+  initializeResponsiveFoundation();
 
   function escapeHtml(value) {
     return String(value || "")
@@ -241,6 +348,533 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function escapeAttribute(value) {
     return escapeHtml(value);
+  }
+
+  function polarToCartesian(cx, cy, radius, angle) {
+    return {
+      x: Number((cx + Math.cos(angle) * radius).toFixed(2)),
+      y: Number((cy + Math.sin(angle) * radius).toFixed(2)),
+    };
+  }
+
+  function buildGearOutlinePath({
+    cx,
+    cy,
+    outerRadius,
+    coreRadius,
+    toothCount,
+    toothDepth,
+  }) {
+    const rootRadius = outerRadius - toothDepth;
+    const toothStep = (Math.PI * 2) / toothCount;
+    let d = "";
+
+    for (let index = 0; index < toothCount; index += 1) {
+      const startAngle = index * toothStep - Math.PI / 2;
+      const points = [
+        polarToCartesian(cx, cy, rootRadius, startAngle),
+        polarToCartesian(cx, cy, outerRadius, startAngle + toothStep * 0.22),
+        polarToCartesian(cx, cy, outerRadius, startAngle + toothStep * 0.52),
+        polarToCartesian(cx, cy, rootRadius, startAngle + toothStep * 0.82),
+      ];
+
+      d += `${index === 0 ? "M" : "L"} ${points[0].x} ${points[0].y}`;
+      d += ` L ${points[1].x} ${points[1].y}`;
+      d += ` L ${points[2].x} ${points[2].y}`;
+      d += ` L ${points[3].x} ${points[3].y}`;
+    }
+
+    d += " Z";
+    d += ` M ${cx + coreRadius} ${cy}`;
+    d += ` A ${coreRadius} ${coreRadius} 0 1 0 ${cx - coreRadius} ${cy}`;
+    d += ` A ${coreRadius} ${coreRadius} 0 1 0 ${cx + coreRadius} ${cy} Z`;
+
+    return d;
+  }
+
+  function buildGearSpokesMarkup({
+    cx,
+    cy,
+    outerRadius,
+    coreRadius,
+    spokes,
+  }) {
+    const spokeWidth = Math.max(12, Math.round(coreRadius * 0.48));
+    const outerReach = Math.max(coreRadius + 24, outerRadius - 24);
+    const spokeHeight = Math.max(outerReach - coreRadius, 42);
+    const spokeX = cx - spokeWidth / 2;
+    const spokeY = cy - outerReach;
+
+    return Array.from({ length: spokes })
+      .map((_, index) => {
+        const angle = (360 / spokes) * index;
+        return `
+          <rect
+            class="site-home-hero-machine-spoke"
+            x="${spokeX.toFixed(2)}"
+            y="${spokeY.toFixed(2)}"
+            width="${spokeWidth}"
+            height="${spokeHeight.toFixed(2)}"
+            rx="${Math.max(spokeWidth / 2, 8).toFixed(2)}"
+            transform="rotate(${angle.toFixed(2)} ${cx} ${cy})"
+          ></rect>
+        `;
+      })
+      .join("");
+  }
+
+  function buildGearBoltsMarkup({ cx, cy, bolts, boltOrbit }) {
+    return Array.from({ length: bolts })
+      .map((_, index) => {
+        const angle = -Math.PI / 2 + (index / bolts) * Math.PI * 2;
+        const point = polarToCartesian(cx, cy, boltOrbit, angle);
+        return `
+          <g class="site-home-hero-machine-bolt">
+            <circle cx="${point.x}" cy="${point.y}" r="7.5"></circle>
+            <circle cx="${point.x}" cy="${point.y}" r="3.2"></circle>
+          </g>
+        `;
+      })
+      .join("");
+  }
+
+  function buildHomepageHeroGearMarkup(config) {
+    const outlinePath = buildGearOutlinePath(config);
+    const ringRadius = Math.max(
+      config.coreRadius + 18,
+      config.outerRadius - config.toothDepth - 16,
+    );
+    const secondaryRingRadius = Math.max(config.coreRadius + 12, ringRadius - 28);
+    const accentRadius = Math.max(config.coreRadius + 10, secondaryRingRadius - 26);
+    const boltOrbit = Math.max(config.coreRadius + 24, secondaryRingRadius - 8);
+
+    return `
+      <g class="site-home-hero-machine-gear ${config.className}" data-home-hero-reveal="true">
+        <path
+          class="site-home-hero-machine-gear-body"
+          fill-rule="evenodd"
+          d="${outlinePath}"
+        ></path>
+        <circle
+          class="site-home-hero-machine-gear-ring"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${ringRadius}"
+        ></circle>
+        <circle
+          class="site-home-hero-machine-gear-ring site-home-hero-machine-gear-ring--secondary"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${secondaryRingRadius}"
+        ></circle>
+        ${buildGearSpokesMarkup({
+          cx: config.cx,
+          cy: config.cy,
+          outerRadius: ringRadius,
+          coreRadius: accentRadius,
+          spokes: config.spokes,
+        })}
+        ${buildGearBoltsMarkup({
+          cx: config.cx,
+          cy: config.cy,
+          bolts: config.bolts,
+          boltOrbit,
+        })}
+        <circle
+          class="site-home-hero-machine-gear-hub"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${config.coreRadius + 6}"
+        ></circle>
+        <circle
+          class="site-home-hero-machine-gear-hub-cap"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${Math.max(12, config.coreRadius * 0.56).toFixed(2)}"
+        ></circle>
+        <circle
+          class="site-home-hero-machine-gear-pulse"
+          cx="${config.cx}"
+          cy="${config.cy}"
+          r="${Math.max(config.coreRadius + 16, secondaryRingRadius - 12).toFixed(
+            2,
+          )}"
+        ></circle>
+      </g>
+    `;
+  }
+
+  function buildHomepageHeroMachineMarkup() {
+    const gearConfigs = [
+      {
+        className: "site-home-hero-machine-gear--alpha",
+        cx: 700,
+        cy: 290,
+        outerRadius: 156,
+        coreRadius: 44,
+        toothCount: 18,
+        toothDepth: 22,
+        spokes: 6,
+        bolts: 6,
+      },
+      {
+        className: "site-home-hero-machine-gear--beta",
+        cx: 520,
+        cy: 154,
+        outerRadius: 86,
+        coreRadius: 26,
+        toothCount: 14,
+        toothDepth: 14,
+        spokes: 5,
+        bolts: 5,
+      },
+      {
+        className: "site-home-hero-machine-gear--gamma",
+        cx: 526,
+        cy: 470,
+        outerRadius: 114,
+        coreRadius: 32,
+        toothCount: 16,
+        toothDepth: 16,
+        spokes: 5,
+        bolts: 5,
+      },
+      {
+        className: "site-home-hero-machine-gear--delta",
+        cx: 700,
+        cy: 676,
+        outerRadius: 74,
+        coreRadius: 24,
+        toothCount: 12,
+        toothDepth: 12,
+        spokes: 4,
+        bolts: 4,
+      },
+    ];
+    const routePaths = [
+      "M 520 154 C 575 166 620 197 661 242",
+      "M 526 470 C 584 493 633 536 682 596",
+      "M 700 70 L 700 834",
+      "M 738 362 C 776 408 787 470 756 556",
+      "M 700 556 L 700 742",
+    ];
+    const routeMarkup = routePaths
+      .map(
+        (path, index) => `
+          <path class="site-home-hero-machine-route" data-home-hero-draw="true" d="${path}"></path>
+          <path class="site-home-hero-machine-route-flow site-home-hero-machine-route-flow--${
+            (index % 3) + 1
+          }" d="${path}"></path>
+        `,
+      )
+      .join("");
+    const boltPairs = [
+      [446, 88],
+      [842, 88],
+      [446, 808],
+      [842, 808],
+      [470, 220],
+      [784, 220],
+      [470, 716],
+      [784, 716],
+    ];
+
+    return `
+      <div class="site-home-hero-machine" data-site-home-hero-machine-mounted="true">
+        <div class="site-home-hero-machine-shell">
+          <span class="site-home-hero-machine-ambience site-home-hero-machine-ambience--lime"></span>
+          <span class="site-home-hero-machine-ambience site-home-hero-machine-ambience--blue"></span>
+          <span class="site-home-hero-machine-sweep"></span>
+          <svg
+            class="site-home-hero-machine-svg"
+            viewBox="0 0 1000 900"
+            preserveAspectRatio="xMidYMid slice"
+            role="presentation"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="site-home-hero-metal" x1="10%" y1="5%" x2="88%" y2="92%">
+                <stop offset="0%" stop-color="#fbfcff"></stop>
+                <stop offset="16%" stop-color="#8d96a5"></stop>
+                <stop offset="48%" stop-color="#212935"></stop>
+                <stop offset="76%" stop-color="#596474"></stop>
+                <stop offset="100%" stop-color="#0d1118"></stop>
+              </linearGradient>
+              <linearGradient id="site-home-hero-metal-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#27303d"></stop>
+                <stop offset="52%" stop-color="#0f141c"></stop>
+                <stop offset="100%" stop-color="#040608"></stop>
+              </linearGradient>
+              <linearGradient id="site-home-hero-brass" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f2d7a2"></stop>
+                <stop offset="42%" stop-color="#987345"></stop>
+                <stop offset="100%" stop-color="#352515"></stop>
+              </linearGradient>
+              <linearGradient id="site-home-hero-beam" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#fbfcff"></stop>
+                <stop offset="10%" stop-color="#dff969"></stop>
+                <stop offset="38%" stop-color="#7cffd8"></stop>
+                <stop offset="66%" stop-color="#1f7cff"></stop>
+                <stop offset="100%" stop-color="#fbfcff"></stop>
+              </linearGradient>
+              <radialGradient id="site-home-hero-glow-lime" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#f5ffbf" stop-opacity="0.92"></stop>
+                <stop offset="40%" stop-color="#dff969" stop-opacity="0.42"></stop>
+                <stop offset="100%" stop-color="#dff969" stop-opacity="0"></stop>
+              </radialGradient>
+              <radialGradient id="site-home-hero-glow-blue" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#e2f1ff" stop-opacity="0.8"></stop>
+                <stop offset="40%" stop-color="#4f92ff" stop-opacity="0.34"></stop>
+                <stop offset="100%" stop-color="#4f92ff" stop-opacity="0"></stop>
+              </radialGradient>
+              <filter id="site-home-hero-beam-blur" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="10"></feGaussianBlur>
+              </filter>
+            </defs>
+            <g class="site-home-hero-machine-stage">
+              <g class="site-home-hero-machine-plate-stack" data-home-hero-reveal="true">
+                <rect
+                  class="site-home-hero-machine-plate site-home-hero-machine-plate--outer"
+                  x="418"
+                  y="36"
+                  width="458"
+                  height="828"
+                  rx="44"
+                ></rect>
+                <rect
+                  class="site-home-hero-machine-plate site-home-hero-machine-plate--inner"
+                  x="472"
+                  y="86"
+                  width="304"
+                  height="698"
+                  rx="30"
+                ></rect>
+                <rect
+                  class="site-home-hero-machine-plate site-home-hero-machine-plate--spine"
+                  x="661"
+                  y="30"
+                  width="78"
+                  height="840"
+                  rx="39"
+                ></rect>
+                <circle
+                  class="site-home-hero-machine-plate-glow site-home-hero-machine-plate-glow--lime"
+                  cx="702"
+                  cy="292"
+                  r="228"
+                ></circle>
+                <circle
+                  class="site-home-hero-machine-plate-glow site-home-hero-machine-plate-glow--blue"
+                  cx="706"
+                  cy="676"
+                  r="152"
+                ></circle>
+              </g>
+              <g class="site-home-hero-machine-structure" data-home-hero-reveal="true">
+                <path class="site-home-hero-machine-rail" d="M 308 154 L 484 202"></path>
+                <path class="site-home-hero-machine-rail" d="M 312 188 L 470 230"></path>
+                <path class="site-home-hero-machine-rail" d="M 316 468 L 490 462"></path>
+                <path class="site-home-hero-machine-rail" d="M 318 506 L 480 520"></path>
+                <path class="site-home-hero-machine-rail site-home-hero-machine-rail--accent" d="M 834 168 L 834 742"></path>
+                <circle class="site-home-hero-machine-bearing" cx="700" cy="290" r="198"></circle>
+                <circle class="site-home-hero-machine-bearing" cx="700" cy="676" r="104"></circle>
+                <path class="site-home-hero-machine-panel-line" d="M 508 118 L 742 118"></path>
+                <path class="site-home-hero-machine-panel-line" d="M 506 760 L 742 760"></path>
+              </g>
+              <g class="site-home-hero-machine-beam" data-home-hero-reveal="true">
+                <rect
+                  class="site-home-hero-machine-beam-housing"
+                  x="665"
+                  y="44"
+                  width="70"
+                  height="820"
+                  rx="35"
+                ></rect>
+                <path class="site-home-hero-machine-beam-sheath site-home-hero-machine-beam-sheath--left" d="M 684 58 L 684 842"></path>
+                <path class="site-home-hero-machine-beam-sheath site-home-hero-machine-beam-sheath--right" d="M 716 58 L 716 842"></path>
+                <path class="site-home-hero-machine-beam-glow" d="M 700 52 L 700 848"></path>
+                <path class="site-home-hero-machine-beam-core" d="M 700 74 L 700 826"></path>
+                ${routeMarkup}
+              </g>
+              ${gearConfigs.map((config) => buildHomepageHeroGearMarkup(config)).join("")}
+              <g class="site-home-hero-machine-clamps" data-home-hero-reveal="true">
+                <rect class="site-home-hero-machine-clamp-block" x="612" y="92" width="176" height="54" rx="22"></rect>
+                <rect class="site-home-hero-machine-clamp-arm site-home-hero-machine-clamp-arm--wide" x="576" y="116" width="242" height="14" rx="7"></rect>
+                <rect class="site-home-hero-machine-clamp-block" x="616" y="582" width="168" height="58" rx="24"></rect>
+                <rect class="site-home-hero-machine-clamp-arm" x="588" y="606" width="224" height="16" rx="8"></rect>
+                <rect class="site-home-hero-machine-clamp-block" x="624" y="742" width="152" height="68" rx="24"></rect>
+                <rect class="site-home-hero-machine-clamp-arm site-home-hero-machine-clamp-arm--narrow" x="602" y="770" width="196" height="14" rx="7"></rect>
+              </g>
+              <g class="site-home-hero-machine-indicators" data-home-hero-reveal="true">
+                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--amber" cx="812" cy="150" r="8"></circle>
+                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--red" cx="812" cy="178" r="6"></circle>
+                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--white" cx="812" cy="208" r="6"></circle>
+                <circle class="site-home-hero-machine-indicator site-home-hero-machine-indicator--blue" cx="812" cy="604" r="7"></circle>
+              </g>
+              <g class="site-home-hero-machine-bolt-pairs" data-home-hero-reveal="true">
+                ${boltPairs
+                  .map(
+                    ([cx, cy]) => `
+                      <g class="site-home-hero-machine-bolt">
+                        <circle cx="${cx}" cy="${cy}" r="9"></circle>
+                        <circle cx="${cx}" cy="${cy}" r="4"></circle>
+                      </g>
+                    `,
+                  )
+                  .join("")}
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    `;
+  }
+
+  function playHomepageHeroMachineIntro(mount) {
+    if (
+      !(mount instanceof HTMLElement) ||
+      mount.dataset.siteHomeHeroMachineIntroPlayed === "true"
+    ) {
+      return;
+    }
+
+    mount.dataset.siteHomeHeroMachineIntroPlayed = "true";
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+
+    mount
+      .querySelectorAll("[data-home-hero-reveal='true'], [data-home-hero-reveal]")
+      .forEach((node, index) => {
+        if (!(node instanceof SVGElement || node instanceof HTMLElement)) {
+          return;
+        }
+
+        node.animate(
+          [
+            { opacity: 0, transform: "translateY(18px) scale(0.975)" },
+            { opacity: 1, transform: "translateY(0) scale(1)" },
+          ],
+          {
+            duration: 900,
+            delay: 80 + index * 90,
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            fill: "forwards",
+          },
+        );
+      });
+
+    // Measure each SVG trace so the draw reveal always matches the path length.
+    mount
+      .querySelectorAll("[data-home-hero-draw='true'], [data-home-hero-draw]")
+      .forEach((node, index) => {
+        if (!(node instanceof SVGPathElement)) {
+          return;
+        }
+
+        const length = node.getTotalLength();
+        node.style.strokeDasharray = `${length.toFixed(2)} ${length.toFixed(2)}`;
+        node.style.strokeDashoffset = `${length.toFixed(2)}`;
+        node.animate(
+          [
+            { strokeDashoffset: length, opacity: 0 },
+            { strokeDashoffset: 0, opacity: 1 },
+          ],
+          {
+            duration: 1320,
+            delay: 180 + index * 120,
+            easing: "cubic-bezier(0.19, 1, 0.22, 1)",
+            fill: "forwards",
+          },
+        );
+      });
+  }
+
+  function syncHomepageHeroMachine() {
+    if (currentPath !== "index.html") {
+      return;
+    }
+
+    const placeholder = document.querySelector(
+      "[data-home-hero-visual-placeholder='true']",
+    );
+
+    if (!(placeholder instanceof HTMLElement)) {
+      return;
+    }
+
+    // Keep the exported hero box intact and only replace the inert visual payload.
+    placeholder.classList.add("site-home-hero-machine-mount");
+
+    if (placeholder.dataset.siteHomeHeroMachineMounted !== "true") {
+      placeholder.dataset.siteHomeHeroMachineMounted = "true";
+      placeholder.innerHTML = buildHomepageHeroMachineMarkup();
+    }
+
+    playHomepageHeroMachineIntro(placeholder);
+  }
+
+  function buildIndustriesShowcaseMarkup() {
+    return `
+      <section class="site-industries-grid-section" data-site-industries-grid-mounted="true" aria-labelledby="site-industries-grid-heading">
+        <div class="site-industries-grid-shell">
+          <div class="site-industries-grid-header">
+            <p class="site-industries-eyebrow">Applications</p>
+            <h2 id="site-industries-grid-heading">Precision components for demanding sectors.</h2>
+            <p class="site-industries-intro">
+              UZHNAQ supports a wide mix of motion, driveline, and transmission applications with components built for fit,
+              durability, and repeatable performance.
+            </p>
+          </div>
+          <div class="site-industries-grid" role="list">
+            ${industriesShowcaseCards
+              .map(
+                (card) => `
+                  <article class="site-industry-card" role="listitem">
+                    <span class="site-industry-card-eyebrow">${escapeHtml(card.eyebrow)}</span>
+                    <h3>${escapeHtml(card.title)}</h3>
+                    <p>${escapeHtml(card.copy)}</p>
+                  </article>
+                `,
+              )
+              .join("")}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function buildMachinesOverviewMarkup() {
+    return `
+      <section class="site-machines-overview-section" data-site-machines-overview-mounted="true" aria-labelledby="site-machines-overview-heading">
+        <div class="site-machines-overview-shell">
+          <div class="site-machines-overview-copy">
+            <p class="site-machines-eyebrow">Machine Suite</p>
+            <h1 id="site-machines-overview-heading">Machine suite updates are on the way.</h1>
+            <p class="site-machines-intro">
+              We are rebuilding this page so machine coverage is easier to browse across desktop, tablet, and mobile.
+              Until the full release is ready, you can explore the core product range or send us an enquiry directly.
+            </p>
+            <ul class="site-machines-highlight-list">
+              ${machinesOverviewHighlights.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+            </ul>
+            <div class="site-machines-actions">
+              <a class="site-machines-action site-machines-action--primary" href="./products.html">Explore Products</a>
+              <a class="site-machines-action site-machines-action--secondary" href="./contact.html">Enquire Now</a>
+            </div>
+          </div>
+          <aside class="site-machines-overview-panel" aria-label="Upcoming machine coverage">
+            <p class="site-machines-panel-eyebrow">Next Up</p>
+            <h2>Better structure, cleaner navigation, and clearer technical storytelling.</h2>
+            <p>
+              The upcoming machine page will group equipment more cleanly, reduce visual clutter, and make brochure and enquiry
+              actions easier to reach at every breakpoint.
+            </p>
+            <a class="site-machines-panel-link" href="${escapeAttribute(siteResourceConfig.brochure.viewUrl)}" target="_blank" rel="noopener">View Company Profile</a>
+          </aside>
+        </div>
+      </section>
+    `;
   }
 
   function buildYouTubeEmbedUrl(videoId) {
@@ -257,7 +891,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return "";
     }
 
-    return /^https?:\/\//i.test(trimmedValue) ? trimmedValue : `https://${trimmedValue.replace(/^\/+/, "")}`;
+    return /^https?:\/\//i.test(trimmedValue)
+      ? trimmedValue
+      : `https://${trimmedValue.replace(/^\/+/, "")}`;
   }
 
   function createPhoneHref(value) {
@@ -294,10 +930,15 @@ document.addEventListener("DOMContentLoaded", () => {
       emailInput.classList.add("site-footer-email-input");
       emailInput.removeAttribute("style");
       emailInput.setAttribute("autocomplete", "email");
-      emailInput.setAttribute("aria-label", emailInput.getAttribute("placeholder") || "Email address");
+      emailInput.setAttribute(
+        "aria-label",
+        emailInput.getAttribute("placeholder") || "Email address",
+      );
     }
 
-    const submitControl = form.querySelector('input[type="submit"], button[type="submit"]');
+    const submitControl = form.querySelector(
+      'input[type="submit"], button[type="submit"]',
+    );
     if (submitControl instanceof HTMLElement) {
       submitControl.classList.add("site-footer-submit-button");
       submitControl.removeAttribute("style");
@@ -331,16 +972,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function collectFooterData(root) {
     const headline =
-      extractText(root.querySelector(".uzhnaq-1r1llpm")).replace(/\s+([!?.,:;])/g, "$1") ||
-      "Partner with Us for Excellence!";
+      extractText(root.querySelector(".uzhnaq-1r1llpm")).replace(
+        /\s+([!?.,:;])/g,
+        "$1",
+      ) || "Partner with Us for Excellence!";
     const website = extractText(root.querySelector(".uzhnaq-155pa7s"));
     const email = extractText(root.querySelector(".uzhnaq-cpge1f"));
     const phone = extractText(root.querySelector(".uzhnaq-xkjyig"));
     const address = extractText(root.querySelector(".uzhnaq-9pv2is"));
     const newsletterTitle =
-      extractText(root.querySelector(".uzhnaq-1wpygkq")) || "Subscribe to our newsletter";
+      extractText(root.querySelector(".uzhnaq-1wpygkq")) ||
+      "Subscribe to our newsletter";
     const newsletterCopy =
-      extractText(root.querySelector(".uzhnaq-1mu0ah0")) || "Send in your email and receive all updates!";
+      extractText(root.querySelector(".uzhnaq-1mu0ah0")) ||
+      "Send in your email and receive all updates!";
 
     const contactItems = [
       {
@@ -383,7 +1028,9 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       newsletterTitle,
       newsletterCopy,
-      newsletterForm: cloneNewsletterForm(root.querySelector(".uzhnaq-svmtds-container")),
+      newsletterForm: cloneNewsletterForm(
+        root.querySelector(".uzhnaq-svmtds-container"),
+      ),
       legalItems,
     };
   }
@@ -448,7 +1095,10 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     const formSlot = shell.querySelector(".site-footer-newsletter-form-slot");
-    if (formSlot instanceof HTMLElement && data.newsletterForm instanceof HTMLElement) {
+    if (
+      formSlot instanceof HTMLElement &&
+      data.newsletterForm instanceof HTMLElement
+    ) {
       formSlot.appendChild(data.newsletterForm);
     }
 
@@ -509,14 +1159,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function syncVisibleFooterAnchor() {
-    const footerShells = Array.from(document.querySelectorAll(".site-footer-shell"));
+    const footerShells = Array.from(
+      document.querySelectorAll(".site-footer-shell"),
+    );
     footerShells.forEach((shell) => {
       if (shell instanceof HTMLElement) {
         shell.removeAttribute("id");
       }
     });
 
-    const visibleShell = footerShells.find((shell) => shell instanceof HTMLElement && isRenderable(shell));
+    const visibleShell = footerShells.find(
+      (shell) => shell instanceof HTMLElement && isRenderable(shell),
+    );
     if (visibleShell instanceof HTMLElement) {
       visibleShell.id = "site-footer-shell";
     }
@@ -540,7 +1194,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (!changed) {
-      anchor.innerHTML = anchor.innerHTML.replace(/watch video|view brochure|download brochure|view socials/gi, label);
+      anchor.innerHTML = anchor.innerHTML.replace(
+        /watch video|view brochure|download brochure|view socials/gi,
+        label,
+      );
     }
   }
 
@@ -571,7 +1228,14 @@ document.addEventListener("DOMContentLoaded", () => {
     anchor.dataset.siteHeroCtaIcon = iconName;
   }
 
-  function createHomepageBrochureButton(sourceAnchor, label, href, variantClass, iconName, external = true) {
+  function createHomepageBrochureButton(
+    sourceAnchor,
+    label,
+    href,
+    variantClass,
+    iconName,
+    external = true,
+  ) {
     const clone = sourceAnchor.cloneNode(true);
     clone.dataset.siteBrochureHeroButton = "true";
     clone.dataset.siteBrochureHydrated = "true";
@@ -599,7 +1263,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     event.preventDefault();
     targetFooter.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
       block: "start",
     });
 
@@ -613,62 +1279,87 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function initializeHomepageHeroBrochureCtas() {
-    if (currentPath !== "index.html") {
+    if (!isHomepageLike) {
       return;
     }
 
-    document.querySelectorAll('a[href*="youtube.com/watch"]').forEach((watchAnchor) => {
-      if (!(watchAnchor instanceof HTMLAnchorElement) || watchAnchor.dataset.siteBrochureHydrated === "true") {
-        return;
-      }
+    document
+      .querySelectorAll('a[href*="youtube.com/watch"]')
+      .forEach((watchAnchor) => {
+        if (
+          !(watchAnchor instanceof HTMLAnchorElement) ||
+          watchAnchor.dataset.siteBrochureHydrated === "true"
+        ) {
+          return;
+        }
 
-      const watchLabel = extractText(watchAnchor).toLowerCase();
-      if (!watchLabel.includes("watch video")) {
-        return;
-      }
+        const watchLabel = extractText(watchAnchor).toLowerCase();
+        if (!watchLabel.includes("watch video")) {
+          return;
+        }
 
-      const actionRow = watchAnchor.parentElement?.parentElement;
-      const enquireAnchor = actionRow?.querySelector('a[href="./contact.html"]');
-      if (!(actionRow instanceof HTMLElement) || !(enquireAnchor instanceof HTMLAnchorElement)) {
-        return;
-      }
+        const actionRow = watchAnchor.parentElement?.parentElement;
+        const enquireAnchor = actionRow?.querySelector(
+          'a[href="./contact.html"]',
+        );
+        if (
+          !(actionRow instanceof HTMLElement) ||
+          !(enquireAnchor instanceof HTMLAnchorElement)
+        ) {
+          return;
+        }
 
-      actionRow.classList.add("site-hero-cta-row");
-      enquireAnchor.classList.add("site-hero-cta-link", "site-hero-enquiry-link");
-      ensureHeroCtaIcon(enquireAnchor, "phone");
+        actionRow.classList.add("site-hero-cta-row");
+        enquireAnchor.classList.add(
+          "site-hero-cta-link",
+          "site-hero-enquiry-link",
+        );
+        ensureHeroCtaIcon(enquireAnchor, "phone");
 
-      watchAnchor.dataset.siteBrochureHydrated = "true";
-      watchAnchor.classList.add("site-hero-cta-link", "site-hero-brochure-link", "site-hero-brochure-link--view");
-      watchAnchor.href = siteResourceConfig.brochure.viewUrl;
-      watchAnchor.target = "_blank";
-      watchAnchor.rel = "noopener";
-      replaceButtonLabel(watchAnchor, "View Brochure");
-      ensureHeroCtaIcon(watchAnchor, "brochure");
+        watchAnchor.dataset.siteBrochureHydrated = "true";
+        watchAnchor.classList.add(
+          "site-hero-cta-link",
+          "site-hero-brochure-link",
+          "site-hero-brochure-link--view",
+        );
+        watchAnchor.href = siteResourceConfig.brochure.viewUrl;
+        watchAnchor.target = "_blank";
+        watchAnchor.rel = "noopener";
+        replaceButtonLabel(watchAnchor, "View Brochure");
+        ensureHeroCtaIcon(watchAnchor, "brochure");
 
-      const watchContainer = watchAnchor.parentElement;
-      if (!(watchContainer instanceof HTMLElement) || actionRow.querySelector('[data-site-hero-socials="true"]')) {
-        return;
-      }
+        const watchContainer = watchAnchor.parentElement;
+        if (
+          !(watchContainer instanceof HTMLElement) ||
+          actionRow.querySelector('[data-site-hero-socials="true"]')
+        ) {
+          return;
+        }
 
-      const socialsContainer = watchContainer.cloneNode(false);
-      const socialsAnchor = createHomepageBrochureButton(
-        watchAnchor,
-        "View Socials",
-        "#site-footer-shell",
-        "site-hero-brochure-link--socials",
-        "arrowDown",
-        false,
-      );
-      socialsAnchor.dataset.siteHeroSocials = "true";
-      socialsAnchor.addEventListener("click", scrollToVisibleFooter);
-      socialsContainer.classList.add("site-hero-socials-slot");
-      socialsContainer.appendChild(socialsAnchor);
-      watchContainer.insertAdjacentElement("afterend", socialsContainer);
-    });
+        const socialsContainer = watchContainer.cloneNode(false);
+        const socialsAnchor = createHomepageBrochureButton(
+          watchAnchor,
+          "View Socials",
+          "#site-footer-shell",
+          "site-hero-brochure-link--socials",
+          "arrowDown",
+          false,
+        );
+        socialsAnchor.dataset.siteHeroSocials = "true";
+        socialsAnchor.addEventListener("click", scrollToVisibleFooter);
+        socialsContainer.classList.add("site-hero-socials-slot");
+        socialsContainer.appendChild(socialsAnchor);
+        watchContainer.insertAdjacentElement("afterend", socialsContainer);
+      });
   }
 
   function isRenderable(element) {
-    if (!(element instanceof HTMLElement) || !element.isConnected || element.offsetWidth <= 0 || element.offsetHeight <= 0) {
+    if (
+      !(element instanceof HTMLElement) ||
+      !element.isConnected ||
+      element.offsetWidth <= 0 ||
+      element.offsetHeight <= 0
+    ) {
       return false;
     }
 
@@ -682,6 +1373,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     return element.getClientRects().length > 0;
+  }
+
+  function syncHomepageTitleLoaderAccent() {
+    if (!shouldMountHomepageTitleAccent) {
+      return;
+    }
+
+    document
+      .querySelectorAll(".site-home-title-has-loader")
+      .forEach((element) => {
+        element.classList.remove("site-home-title-has-loader");
+      });
+
+    document.querySelectorAll("#ajax-load").forEach((element) => {
+      element.remove();
+    });
+
+    const visibleTitle = Array.from(
+      document.querySelectorAll(".uzhnaq-10mrn1k"),
+    )
+      .filter(
+        (element) => element instanceof HTMLElement && isRenderable(element),
+      )
+      .find((element) =>
+        /passion.*precision.*performa/i.test(
+          (element.textContent || "").replace(/\s+/g, "").toLowerCase(),
+        ),
+      );
+
+    if (!(visibleTitle instanceof HTMLElement)) {
+      return;
+    }
+
+    const ajaxLoad = document.createElement("div");
+    ajaxLoad.id = "ajax-load";
+    ajaxLoad.setAttribute("aria-hidden", "true");
+
+    Array.from({ length: 15 }).forEach((_, index) => {
+      const loadingBar = document.createElement("div");
+      loadingBar.className = "loading-bar";
+      loadingBar.style.setProperty("--ajax-index", `${index}`);
+      ajaxLoad.appendChild(loadingBar);
+    });
+
+    visibleTitle.classList.add("site-home-title-has-loader");
+    visibleTitle.prepend(ajaxLoad);
   }
 
   function buildYouTubeEmbed(video) {
@@ -860,44 +1597,62 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  function initializeHomepageFactsGallery(attempt = 0) {
-    if (currentPath !== "index.html") {
+  function syncHomepageFactsGallery(attempt = 0) {
+    if (!isHomepageLike) {
       return;
     }
 
-    if (document.querySelector("[data-site-facts-gallery-mounted='true']")) {
-      return;
-    }
-
-    const factsHost = Array.from(document.querySelectorAll(".uzhnaq-es2yhr")).find((section) => {
-      if (!(section instanceof HTMLElement) || !isRenderable(section)) {
-        return false;
-      }
-
+    const factsGallery = document.querySelector(
+      "[data-site-facts-gallery-mounted='true']",
+    );
+    const factsHost = findVisibleElement(".uzhnaq-es2yhr", (section) => {
       const heading = extractText(section.querySelector("h1, h2, h3, h4, p"));
       return /trusted by 150\+ clients worldwide/i.test(heading);
     });
 
     if (!(factsHost instanceof HTMLElement)) {
-      if (attempt < 8) {
-        window.setTimeout(() => initializeHomepageFactsGallery(attempt + 1), 120);
+      if (!(factsGallery instanceof HTMLElement) && attempt < 8) {
+        window.setTimeout(
+          () => initializeHomepageFactsGallery(attempt + 1),
+          120,
+        );
       }
       return;
     }
 
     const sourceGrid = factsHost.querySelector(".uzhnaq-z4ble0");
     if (!(sourceGrid instanceof HTMLElement)) {
+      if (!(factsGallery instanceof HTMLElement) && attempt < 8) {
+        window.setTimeout(
+          () => initializeHomepageFactsGallery(attempt + 1),
+          120,
+        );
+      }
       return;
     }
 
     factsHost.classList.add("site-facts-host");
-    sourceGrid.classList.add("site-facts-source-hidden");
+    document.querySelectorAll(".uzhnaq-z4ble0").forEach((grid) => {
+      if (grid instanceof HTMLElement) {
+        grid.classList.add("site-facts-source-hidden");
+      }
+    });
 
-    const gallery = document.createElement("div");
-    gallery.className = "site-facts-gallery";
-    gallery.dataset.siteFactsGalleryMounted = "true";
-    gallery.innerHTML = buildHomepageFactsGalleryMarkup();
-    sourceGrid.insertAdjacentElement("afterend", gallery);
+    let gallery = factsGallery;
+    if (!(gallery instanceof HTMLElement)) {
+      gallery = document.createElement("div");
+      gallery.className = "site-facts-gallery";
+      gallery.dataset.siteFactsGalleryMounted = "true";
+      gallery.innerHTML = buildHomepageFactsGalleryMarkup();
+    }
+
+    if (gallery.previousElementSibling !== sourceGrid) {
+      sourceGrid.insertAdjacentElement("afterend", gallery);
+    }
+
+    if (gallery.dataset.siteFactsGalleryBound === "true") {
+      return;
+    }
 
     const factsRing = gallery.querySelector(".site-facts-ring");
     const factCards = Array.from(gallery.querySelectorAll(".site-fact-card"));
@@ -913,39 +1668,63 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     }
+
+    gallery.dataset.siteFactsGalleryBound = "true";
   }
 
-  function initializeHomepageVideoGallery(attempt = 0) {
-    if (currentPath !== "index.html") {
+  function initializeHomepageFactsGallery(attempt = 0) {
+    syncHomepageFactsGallery(attempt);
+  }
+
+  function syncHomepageVideoGallery(attempt = 0) {
+    if (!isHomepageLike) {
       return;
     }
 
-    if (document.querySelector("[data-site-video-gallery-mounted='true']")) {
-      return;
-    }
-
-    const visibleCarousel = Array.from(document.querySelectorAll(".static-tech-carousel")).find((section) =>
-      isRenderable(section),
+    const gallerySection = document.querySelector(
+      "[data-site-video-gallery-mounted='true']",
     );
+    const visibleCarousel = findVisibleElement(".static-tech-carousel");
 
     if (!(visibleCarousel instanceof HTMLElement)) {
-      if (attempt < 8) {
-        window.setTimeout(() => initializeHomepageVideoGallery(attempt + 1), 120);
+      if (!(gallerySection instanceof HTMLElement) && attempt < 8) {
+        window.setTimeout(
+          () => initializeHomepageVideoGallery(attempt + 1),
+          120,
+        );
       }
       return;
     }
 
-    const gallerySection = document.createElement("section");
-    gallerySection.className = "site-video-gallery-section";
-    gallerySection.id = "site-video-gallery-section";
-    gallerySection.dataset.siteVideoGalleryMounted = "true";
-    gallerySection.innerHTML = buildVideoGalleryMarkup();
-    visibleCarousel.insertAdjacentElement("afterend", gallerySection);
+    let mountedSection = gallerySection;
+    if (!(mountedSection instanceof HTMLElement)) {
+      mountedSection = document.createElement("section");
+      mountedSection.className = "site-video-gallery-section";
+      mountedSection.id = "site-video-gallery-section";
+      mountedSection.dataset.siteVideoGalleryMounted = "true";
+      mountedSection.innerHTML = buildVideoGalleryMarkup();
+    }
 
-    const frameSlot = gallerySection.querySelector("[data-site-video-gallery-frame]");
-    const titleNode = gallerySection.querySelector("[data-site-video-gallery-title]");
-    const copyNode = gallerySection.querySelector("[data-site-video-gallery-copy]");
-    const cards = Array.from(gallerySection.querySelectorAll("[data-site-video-card]"));
+    if (mountedSection.previousElementSibling !== visibleCarousel) {
+      visibleCarousel.insertAdjacentElement("afterend", mountedSection);
+    }
+
+    if (mountedSection.dataset.siteVideoGalleryBound === "true") {
+      return;
+    }
+
+    const frameSlot = mountedSection.querySelector(
+      "[data-site-video-gallery-frame]",
+    );
+    const titleNode = mountedSection.querySelector(
+      "[data-site-video-gallery-title]",
+    );
+    const copyNode = mountedSection.querySelector(
+      "[data-site-video-gallery-copy]",
+    );
+    const cards = Array.from(
+      mountedSection.querySelectorAll("[data-site-video-card]"),
+    );
 
     cards.forEach((card) => {
       card.addEventListener("click", () => {
@@ -977,43 +1756,62 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     });
+    mountedSection.dataset.siteVideoGalleryBound = "true";
   }
 
-  function initializeHomepageSocialHub(attempt = 0) {
-    if (currentPath !== "index.html") {
+  function initializeHomepageVideoGallery(attempt = 0) {
+    syncHomepageVideoGallery(attempt);
+  }
+
+  function syncHomepageSocialHub(attempt = 0) {
+    if (!isHomepageLike) {
       return;
     }
 
-    if (document.querySelector("[data-site-social-hub-mounted='true']")) {
-      return;
-    }
-
-    const visibleTestimonials = Array.from(document.querySelectorAll('[data-uzhnaq-name="Testimonials"]')).find(
-      (section) => section instanceof HTMLElement && isRenderable(section),
+    const socialHubSection = document.querySelector(
+      "[data-site-social-hub-mounted='true']",
+    );
+    const visibleTestimonials = findVisibleElement(
+      '[data-uzhnaq-name="Testimonials"]',
     );
 
     if (!(visibleTestimonials instanceof HTMLElement)) {
-      if (attempt < 8) {
+      if (!(socialHubSection instanceof HTMLElement) && attempt < 8) {
         window.setTimeout(() => initializeHomepageSocialHub(attempt + 1), 120);
       }
       return;
     }
 
-    const insertionAnchor = visibleTestimonials.closest(".ssr-variant") || visibleTestimonials;
+    const insertionAnchor =
+      visibleTestimonials.closest(".ssr-variant") || visibleTestimonials;
     if (!(insertionAnchor instanceof HTMLElement)) {
       return;
     }
 
-    const socialHubSection = document.createElement("section");
-    socialHubSection.className = "site-social-hub-section";
-    socialHubSection.id = "site-social-hub-section";
-    socialHubSection.dataset.siteSocialHubMounted = "true";
-    socialHubSection.innerHTML = buildHomepageSocialHubMarkup();
-    insertionAnchor.insertAdjacentElement("afterend", socialHubSection);
+    let mountedSection = socialHubSection;
+    if (!(mountedSection instanceof HTMLElement)) {
+      mountedSection = document.createElement("section");
+      mountedSection.className = "site-social-hub-section";
+      mountedSection.id = "site-social-hub-section";
+      mountedSection.dataset.siteSocialHubMounted = "true";
+      mountedSection.innerHTML = buildHomepageSocialHubMarkup();
+    }
+
+    if (mountedSection.previousElementSibling !== insertionAnchor) {
+      insertionAnchor.insertAdjacentElement("afterend", mountedSection);
+    }
+  }
+
+  function initializeHomepageSocialHub(attempt = 0) {
+    syncHomepageSocialHub(attempt);
   }
 
   function getVisibleRoot() {
-    return document.querySelector("[data-uzhnaq-root]") || document.getElementById("main") || document.body;
+    return (
+      document.querySelector("[data-uzhnaq-root]") ||
+      document.getElementById("main") ||
+      document.body
+    );
   }
 
   function getDirectChild(root, descendant) {
@@ -1024,26 +1822,497 @@ document.addEventListener("DOMContentLoaded", () => {
     return current && current.parentElement === root ? current : null;
   }
 
-  function decorateHeaderNavigation() {
-    document.querySelectorAll('nav[data-uzhnaq-name] [data-uzhnaq-name="Links"] a.uzhnaq-text').forEach((link) => {
-      link.classList.add("site-nav-link");
-      const shell =
-        link.closest('[data-uzhnaq-name="Inline Link"]') ||
-        link.closest('[data-uzhnaq-component-type="RichTextContainer"]');
-      shell?.classList.add("site-nav-item-shell");
+  function findActiveVariantDescendant(selector, predicate = () => true) {
+    return Array.from(document.querySelectorAll(selector)).find((element) => {
+      if (!(element instanceof HTMLElement) || !predicate(element)) {
+        return false;
+      }
+
+      const variant = element.closest(".ssr-variant");
+      if (variant instanceof HTMLElement) {
+        return isRenderable(variant);
+      }
+
+      return true;
+    });
+  }
+
+  function isCompactNavigationMode() {
+    return responsiveNavBreakpoint.matches || window.innerWidth < 1200;
+  }
+
+  function updateResponsiveFoundationMode() {
+    const mode = isCompactNavigationMode() ? "accordion" : "desktop";
+    document.documentElement.dataset.uzhnaqResponsiveMode = mode;
+    document.documentElement.dataset.uzhnaqNavMode = mode;
+  }
+
+  function scheduleResponsiveFoundationRefresh() {
+    if (responsiveFoundationRefreshQueued) {
+      return;
+    }
+
+    responsiveFoundationRefreshQueued = true;
+    window.requestAnimationFrame(() => {
+      responsiveFoundationRefreshQueued = false;
+      refreshResponsiveFoundation();
+    });
+  }
+
+  function initializeResponsiveFoundation() {
+    if (!responsiveFoundationListenersRegistered) {
+      responsiveFoundationListenersRegistered = true;
+      window.addEventListener("resize", scheduleResponsiveFoundationRefresh);
+      window.addEventListener(
+        "orientationchange",
+        scheduleResponsiveFoundationRefresh,
+      );
+
+      if (typeof responsiveNavBreakpoint.addEventListener === "function") {
+        responsiveNavBreakpoint.addEventListener(
+          "change",
+          scheduleResponsiveFoundationRefresh,
+        );
+      } else if (typeof responsiveNavBreakpoint.addListener === "function") {
+        responsiveNavBreakpoint.addListener(
+          scheduleResponsiveFoundationRefresh,
+        );
+      }
+    }
+
+    scheduleResponsiveFoundationRefresh();
+  }
+
+  function refreshResponsiveFoundation() {
+    updateResponsiveFoundationMode();
+    syncResponsiveNavigation();
+    syncVisibleFooterAnchor();
+    syncHomepageHeroMachine();
+    syncHomepageTitleLoaderAccent();
+    syncHomepageInjectedSections();
+    syncCatalogResponsiveEnhancements();
+  }
+
+  function findVisibleElement(selector, predicate = () => true) {
+    return Array.from(document.querySelectorAll(selector)).find(
+      (element) =>
+        element instanceof HTMLElement &&
+        isRenderable(element) &&
+        predicate(element),
+    );
+  }
+
+  function syncHomepageInjectedSections() {
+    if (!shouldMountHomepageInjectedSections) {
+      return;
+    }
+
+    syncHomepageFactsGallery();
+    syncHomepageVideoGallery();
+    syncHomepageSocialHub();
+  }
+
+  function syncCatalogResponsiveEnhancements() {
+    syncIndustriesShowcase();
+    syncMachinesOverview();
+  }
+
+  function syncIndustriesShowcase(attempt = 0) {
+    if (currentPath !== "industries.html") {
+      return;
+    }
+
+    const mountedSection = document.querySelector(
+      "[data-site-industries-grid-mounted='true']",
+    );
+    const footerShell = document.getElementById("site-footer-shell");
+    const footerAnchor =
+      footerShell instanceof HTMLElement
+        ? footerShell.closest(".site-footer-wrapper") ||
+          footerShell.closest(".footer-live-root") ||
+          footerShell.parentElement
+        : null;
+    const headingAnchor = findVisibleElement(
+      '#main[data-uzhnaq-hydrate-v2*="Z9QSHmA22"] .uzhnaq-1oe4f0f',
+      (element) => /industries served/i.test(element.textContent || ""),
+    );
+    const legacyShowcase = findVisibleElement(
+      '#main[data-uzhnaq-hydrate-v2*="Z9QSHmA22"] .uzhnaq-1sw4mw3',
+    );
+    const headingShell =
+      headingAnchor instanceof HTMLElement &&
+      headingAnchor.parentElement instanceof HTMLElement
+        ? headingAnchor.parentElement
+        : headingAnchor;
+    const legacyShell =
+      legacyShowcase instanceof HTMLElement &&
+      legacyShowcase.parentElement instanceof HTMLElement
+        ? legacyShowcase.parentElement
+        : legacyShowcase;
+    const insertionAnchor =
+      footerAnchor instanceof HTMLElement
+        ? footerAnchor
+        : headingShell instanceof HTMLElement
+          ? headingShell
+          : legacyShell instanceof HTMLElement
+            ? legacyShell
+            : null;
+
+    if (!(insertionAnchor instanceof HTMLElement)) {
+      if (!(mountedSection instanceof HTMLElement) && attempt < 8) {
+        window.setTimeout(() => syncIndustriesShowcase(attempt + 1), 140);
+      }
+      return;
+    }
+
+    let section = mountedSection;
+    if (!(section instanceof HTMLElement)) {
+      section = document.createElement("div");
+      section.innerHTML = buildIndustriesShowcaseMarkup();
+      section = section.firstElementChild;
+    }
+
+    if (!(section instanceof HTMLElement)) {
+      return;
+    }
+
+    if (footerAnchor instanceof HTMLElement) {
+      if (section.nextElementSibling !== footerAnchor) {
+        footerAnchor.insertAdjacentElement("beforebegin", section);
+      }
+      return;
+    }
+
+    if (section.previousElementSibling !== insertionAnchor) {
+      insertionAnchor.insertAdjacentElement("afterend", section);
+    }
+  }
+
+  function syncMachinesOverview(attempt = 0) {
+    if (currentPath !== "machines.html") {
+      return;
+    }
+
+    const mountedSection = document.querySelector(
+      "[data-site-machines-overview-mounted='true']",
+    );
+    const navAnchor = findVisibleElement(
+      '#main[data-uzhnaq-hydrate-v2*="D8q3x66Ry"] nav[data-uzhnaq-name]',
+    );
+
+    if (!(navAnchor instanceof HTMLElement)) {
+      if (!(mountedSection instanceof HTMLElement) && attempt < 8) {
+        window.setTimeout(() => syncMachinesOverview(attempt + 1), 140);
+      }
+      return;
+    }
+
+    let section = mountedSection;
+    if (!(section instanceof HTMLElement)) {
+      section = document.createElement("div");
+      section.innerHTML = buildMachinesOverviewMarkup();
+      section = section.firstElementChild;
+    }
+
+    if (!(section instanceof HTMLElement)) {
+      return;
+    }
+
+    if (section.previousElementSibling !== navAnchor) {
+      navAnchor.insertAdjacentElement("afterend", section);
+    }
+  }
+
+  function syncResponsiveNavigation() {
+    responsiveDropdownStates.forEach((state) =>
+      syncResponsiveDropdownState(state),
+    );
+  }
+
+  function syncResponsiveDropdownState(state) {
+    if (
+      !(state?.trigger instanceof HTMLElement) ||
+      !(state?.dropdown instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    const nextMode = isCompactNavigationMode() ? "accordion" : "desktop";
+    if (state.mode !== nextMode) {
+      state.mode = nextMode;
+      state.dropdown.dataset.mode = nextMode;
+      state.dropdown.classList.toggle(
+        "site-nav-accordion-panel",
+        nextMode === "accordion",
+      );
+      state.dropdown.classList.toggle(
+        "site-nav-dropdown-panel",
+        nextMode === "desktop",
+      );
+      state.dropdown.style.left = "";
+      state.dropdown.style.top = "";
+      state.dropdown.dataset.placement = "bottom";
+
+      if (nextMode === "accordion") {
+        state.trigger.insertAdjacentElement("afterend", state.dropdown);
+      } else {
+        document.body.appendChild(state.dropdown);
+      }
+    }
+
+    if (!state.isOpen) {
+      state.trigger.setAttribute("aria-expanded", "false");
+      state.dropdown.setAttribute("aria-hidden", "true");
+      state.dropdown.classList.remove("visible");
+      return;
+    }
+
+    if (nextMode === "desktop") {
+      positionResponsiveDropdown(state);
+      state.dropdown.classList.add("visible");
+      state.dropdown.setAttribute("aria-hidden", "false");
+      state.trigger.setAttribute("aria-expanded", "true");
+    } else {
+      state.dropdown.classList.add("visible");
+      state.dropdown.setAttribute("aria-hidden", "false");
+      state.trigger.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  function positionResponsiveDropdown(state) {
+    if (
+      !(state?.trigger instanceof HTMLElement) ||
+      !(state?.dropdown instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    const rect = state.trigger.getBoundingClientRect();
+    const dropdownWidth = state.dropdown.offsetWidth || 320;
+    const dropdownHeight = state.dropdown.offsetHeight || 260;
+    const maxLeft = window.innerWidth - dropdownWidth - 12;
+    const centeredLeft = rect.left + rect.width / 2 - dropdownWidth / 2;
+    const left = Math.min(Math.max(12, centeredLeft), Math.max(12, maxLeft));
+    const preferredTop = rect.bottom + 4;
+    const fitsBelow = preferredTop + dropdownHeight < window.innerHeight - 12;
+    const top = fitsBelow
+      ? preferredTop
+      : Math.max(12, rect.top - dropdownHeight - 10);
+
+    state.dropdown.style.left = `${left}px`;
+    state.dropdown.style.top = `${top}px`;
+    state.dropdown.dataset.placement = fitsBelow ? "bottom" : "top";
+  }
+
+  function openResponsiveDropdown(state) {
+    if (
+      !(state?.trigger instanceof HTMLElement) ||
+      !(state?.dropdown instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    responsiveDropdownStates.forEach((otherState) => {
+      if (otherState !== state) {
+        closeResponsiveDropdown(otherState);
+      }
     });
 
-    Object.values(dropdownGroups).forEach((config) => {
-      document.querySelectorAll(`[id="${config.triggerId}"]`).forEach((trigger) => {
-        trigger.classList.add("site-nav-trigger", "site-nav-item-shell");
+    state.isOpen = true;
+    state.trigger.setAttribute("aria-expanded", "true");
+    state.dropdown.setAttribute("aria-hidden", "false");
+    state.dropdown.classList.add("visible");
+
+    if (state.mode === "desktop") {
+      positionResponsiveDropdown(state);
+    }
+  }
+
+  function closeResponsiveDropdown(state) {
+    if (
+      !(state?.trigger instanceof HTMLElement) ||
+      !(state?.dropdown instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    state.isOpen = false;
+    state.trigger.setAttribute("aria-expanded", "false");
+    state.dropdown.setAttribute("aria-hidden", "true");
+    state.dropdown.classList.remove("visible");
+  }
+
+  function toggleResponsiveDropdown(state) {
+    if (state.isOpen) {
+      closeResponsiveDropdown(state);
+    } else {
+      openResponsiveDropdown(state);
+    }
+  }
+
+  function buildResponsiveDropdownState(trigger, label, config) {
+    const dropdown = document.createElement("div");
+    const stateId = `site-nav-dropdown-${String(label)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")}-${responsiveDropdownStates.length + 1}`;
+    dropdown.className = "premium-dropdown site-nav-dropdown-panel";
+    dropdown.id = stateId;
+    dropdown.dataset.placement = "bottom";
+    dropdown.dataset.mode = isCompactNavigationMode() ? "accordion" : "desktop";
+    dropdown.setAttribute("aria-hidden", "true");
+    dropdown.innerHTML = `
+      <div class="dropdown-header">
+        <span class="dropdown-eyebrow">${label}</span>
+        <p class="dropdown-lead">${config.lead}</p>
+      </div>
+      <ul class="dropdown-list">
+        ${config.items
+          .map(
+            (item) => `
+              <li>
+                <a href="${item.href}" class="dropdown-item">
+                  <span class="dropdown-item-copy">
+                    <span class="dropdown-item-title">${item.title}</span>
+                    <span class="dropdown-item-subtitle">${item.subtitle}</span>
+                  </span>
+                  <span class="dropdown-item-arrow" aria-hidden="true">&#8594;</span>
+                </a>
+              </li>
+            `,
+          )
+          .join("")}
+      </ul>
+    `;
+
+    const state = {
+      trigger,
+      dropdown,
+      mode: isCompactNavigationMode() ? "accordion" : "desktop",
+      isOpen: false,
+    };
+
+    responsiveDropdownStates.push(state);
+    trigger.dataset.dropdownReady = "true";
+    trigger.classList.add("has-premium-dropdown");
+    trigger.setAttribute("tabindex", "0");
+    trigger.setAttribute("role", "button");
+    trigger.setAttribute("aria-haspopup", "true");
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-controls", stateId);
+
+    if (state.mode === "accordion") {
+      trigger.insertAdjacentElement("afterend", dropdown);
+    } else {
+      document.body.appendChild(dropdown);
+    }
+
+    trigger.addEventListener("focusin", () => openResponsiveDropdown(state));
+    trigger.addEventListener("focusout", (event) => {
+      const nextTarget = event.relatedTarget;
+      if (
+        nextTarget instanceof Node &&
+        (trigger.contains(nextTarget) || dropdown.contains(nextTarget))
+      ) {
+        return;
+      }
+
+      closeResponsiveDropdown(state);
+    });
+    dropdown.addEventListener("focusin", () => openResponsiveDropdown(state));
+    dropdown.addEventListener("focusout", (event) => {
+      const nextTarget = event.relatedTarget;
+      if (
+        nextTarget instanceof Node &&
+        (trigger.contains(nextTarget) || dropdown.contains(nextTarget))
+      ) {
+        return;
+      }
+
+      closeResponsiveDropdown(state);
+    });
+    trigger.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggleResponsiveDropdown(state);
+      }
+
+      if (event.key === "Escape") {
+        closeResponsiveDropdown(state);
+      }
+    });
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleResponsiveDropdown(state);
+    });
+
+    if (prefersHover) {
+      trigger.addEventListener("pointerenter", () => {
+        if (!isCompactNavigationMode()) {
+          openResponsiveDropdown(state);
+        }
       });
+
+      trigger.addEventListener("pointerleave", (event) => {
+        if (!isCompactNavigationMode()) {
+          const nextTarget = event.relatedTarget;
+          if (nextTarget instanceof Node && dropdown.contains(nextTarget)) {
+            return;
+          }
+
+          closeResponsiveDropdown(state);
+        }
+      });
+
+      dropdown.addEventListener("pointerenter", () => {
+        if (!isCompactNavigationMode()) {
+          openResponsiveDropdown(state);
+        }
+      });
+
+      dropdown.addEventListener("pointerleave", (event) => {
+        if (!isCompactNavigationMode()) {
+          const nextTarget = event.relatedTarget;
+          if (nextTarget instanceof Node && trigger.contains(nextTarget)) {
+            return;
+          }
+
+          closeResponsiveDropdown(state);
+        }
+      });
+    }
+
+    return state;
+  }
+
+  function decorateHeaderNavigation() {
+    document
+      .querySelectorAll(
+        'nav[data-uzhnaq-name] [data-uzhnaq-name="Links"] a.uzhnaq-text',
+      )
+      .forEach((link) => {
+        link.classList.add("site-nav-link");
+        const shell =
+          link.closest('[data-uzhnaq-name="Inline Link"]') ||
+          link.closest('[data-uzhnaq-component-type="RichTextContainer"]');
+        shell?.classList.add("site-nav-item-shell");
+      });
+
+    Object.values(dropdownGroups).forEach((config) => {
+      document
+        .querySelectorAll(`[id="${config.triggerId}"]`)
+        .forEach((trigger) => {
+          trigger.classList.add("site-nav-trigger", "site-nav-item-shell");
+        });
     });
   }
 
   function highlightActiveLinks() {
     document.querySelectorAll("a.uzhnaq-text").forEach((link) => {
       const href = (link.getAttribute("href") || "").replace(/^\.\//, "");
-      if (link.getAttribute("data-uzhnaq-page-link-current") === "true" || href === currentPath) {
+      if (
+        link.getAttribute("data-uzhnaq-page-link-current") === "true" ||
+        href === currentPath
+      ) {
         link.classList.add("active-uzhnaq-link");
         link.classList.add("site-nav-current");
         link.closest(".site-nav-item-shell")?.classList.add("site-nav-current");
@@ -1059,155 +2328,76 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    document.querySelectorAll(`[id="${activeTriggerId}"]`).forEach((trigger) => {
-      trigger.classList.add("active-uzhnaq-link");
-      trigger.classList.add("site-nav-current");
-      trigger.querySelectorAll(".uzhnaq-text").forEach((node) => {
-        node.classList.add("active-uzhnaq-link");
+    document
+      .querySelectorAll(`[id="${activeTriggerId}"]`)
+      .forEach((trigger) => {
+        trigger.classList.add("active-uzhnaq-link");
+        trigger.classList.add("site-nav-current");
+        trigger.querySelectorAll(".uzhnaq-text").forEach((node) => {
+          node.classList.add("active-uzhnaq-link");
+        });
       });
-    });
   }
 
   function initializeDropdowns() {
     Object.entries(dropdownGroups).forEach(([label, config]) => {
-      document.querySelectorAll(`[id="${config.triggerId}"]`).forEach((trigger) => {
-        if (trigger.dataset.dropdownReady === "true") {
-          return;
-        }
-
-        trigger.dataset.dropdownReady = "true";
-        trigger.classList.add("has-premium-dropdown");
-        trigger.setAttribute("tabindex", "0");
-        trigger.setAttribute("role", "button");
-        trigger.setAttribute("aria-haspopup", "true");
-        trigger.setAttribute("aria-expanded", "false");
-
-        const dropdown = document.createElement("div");
-        dropdown.className = "premium-dropdown";
-        dropdown.dataset.placement = "bottom";
-        dropdown.innerHTML = `
-          <div class="dropdown-header">
-            <span class="dropdown-eyebrow">${label}</span>
-            <p class="dropdown-lead">${config.lead}</p>
-          </div>
-          <ul class="dropdown-list">
-            ${config.items
-              .map(
-                (item) => `
-                  <li>
-                    <a href="${item.href}" class="dropdown-item">
-                      <span class="dropdown-item-copy">
-                        <span class="dropdown-item-title">${item.title}</span>
-                        <span class="dropdown-item-subtitle">${item.subtitle}</span>
-                      </span>
-                      <span class="dropdown-item-arrow" aria-hidden="true">&#8594;</span>
-                    </a>
-                  </li>
-                `,
-              )
-              .join("")}
-          </ul>
-        `;
-
-        document.body.appendChild(dropdown);
-
-        const positionDropdown = () => {
-          const rect = trigger.getBoundingClientRect();
-          const dropdownWidth = dropdown.offsetWidth || 320;
-          const dropdownHeight = dropdown.offsetHeight || 260;
-          const maxLeft = window.innerWidth - dropdownWidth - 12;
-          const centeredLeft = rect.left + rect.width / 2 - dropdownWidth / 2;
-          const left = Math.min(Math.max(12, centeredLeft), Math.max(12, maxLeft));
-          const preferredTop = rect.bottom + 4;
-          const fitsBelow = preferredTop + dropdownHeight < window.innerHeight - 12;
-          const top = fitsBelow ? preferredTop : Math.max(12, rect.top - dropdownHeight - 10);
-
-          dropdown.style.left = `${left}px`;
-          dropdown.style.top = `${top}px`;
-          dropdown.dataset.placement = fitsBelow ? "bottom" : "top";
-        };
-
-        const showDropdown = () => {
-          dropdown.classList.add("visible");
-          trigger.setAttribute("aria-expanded", "true");
-          positionDropdown();
-        };
-
-        const hideDropdownNow = () => {
-          dropdown.classList.remove("visible");
-          trigger.setAttribute("aria-expanded", "false");
-        };
-
-        const hideDropdown = () => {
-          hideDropdownNow();
-        };
-
-        if (prefersHover) {
-          trigger.addEventListener("pointerenter", showDropdown);
-          trigger.addEventListener("pointerleave", hideDropdown);
-          dropdown.addEventListener("pointerenter", showDropdown);
-          dropdown.addEventListener("pointerleave", hideDropdown);
-        }
-
-        trigger.addEventListener("focusin", showDropdown);
-        trigger.addEventListener("focusout", hideDropdown);
-        trigger.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            if (dropdown.classList.contains("visible")) {
-              hideDropdownNow();
-            } else {
-              showDropdown();
-            }
+      document
+        .querySelectorAll(`[id="${config.triggerId}"]`)
+        .forEach((trigger) => {
+          if (trigger.dataset.dropdownReady === "true") {
+            return;
           }
-
-          if (event.key === "Escape") {
-            hideDropdownNow();
-          }
+          buildResponsiveDropdownState(trigger, label, config);
         });
+    });
 
-        trigger.addEventListener("click", (event) => {
-          if (prefersHover) {
+    if (!responsiveDropdownGlobalsRegistered) {
+      responsiveDropdownGlobalsRegistered = true;
+
+      document.addEventListener("click", (event) => {
+        responsiveDropdownStates.forEach((state) => {
+          if (
+            !(state.trigger instanceof HTMLElement) ||
+            !(state.dropdown instanceof HTMLElement)
+          ) {
             return;
           }
 
-          event.preventDefault();
-          if (dropdown.classList.contains("visible")) {
-            hideDropdownNow();
-          } else {
-            showDropdown();
+          if (
+            !state.dropdown.contains(event.target) &&
+            !state.trigger.contains(event.target)
+          ) {
+            closeResponsiveDropdown(state);
           }
         });
-
-        document.addEventListener("click", (event) => {
-          if (!dropdown.contains(event.target) && !trigger.contains(event.target)) {
-            hideDropdownNow();
-          }
-        });
-
-        window.addEventListener("resize", () => {
-          if (dropdown.classList.contains("visible")) {
-            positionDropdown();
-          }
-        });
-
-        window.addEventListener(
-          "scroll",
-          () => {
-            if (dropdown.classList.contains("visible")) {
-              positionDropdown();
-            }
-          },
-          true,
-        );
       });
-    });
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (isCompactNavigationMode()) {
+            return;
+          }
+
+          responsiveDropdownStates.forEach((state) => {
+            if (state.isOpen) {
+              positionResponsiveDropdown(state);
+            }
+          });
+        },
+        true,
+      );
+    }
+
+    syncResponsiveNavigation();
   }
 
   function resolveEnquiryEndpoint() {
     const configuredEndpoint =
       window.UZHNAQ_ENQUIRY_API ||
-      document.querySelector('meta[name="uzhnaq-enquiry-api"]')?.getAttribute("content") ||
+      document
+        .querySelector('meta[name="uzhnaq-enquiry-api"]')
+        ?.getAttribute("content") ||
       document.documentElement?.getAttribute("data-uzhnaq-enquiry-api") ||
       document.body?.getAttribute("data-uzhnaq-enquiry-api") ||
       "";
@@ -1334,14 +2524,19 @@ document.addEventListener("DOMContentLoaded", () => {
     submitControl.toggleAttribute("disabled", isSubmitting);
 
     if (submitControl instanceof HTMLButtonElement) {
-      submitControl.dataset.defaultLabel ||= submitControl.textContent?.trim() || "Submit";
-      submitControl.textContent = isSubmitting ? "Sending..." : submitControl.dataset.defaultLabel;
+      submitControl.dataset.defaultLabel ||=
+        submitControl.textContent?.trim() || "Submit";
+      submitControl.textContent = isSubmitting
+        ? "Sending..."
+        : submitControl.dataset.defaultLabel;
       return;
     }
 
     if (submitControl instanceof HTMLInputElement) {
       submitControl.dataset.defaultLabel ||= submitControl.value || "Submit";
-      submitControl.value = isSubmitting ? "Sending..." : submitControl.dataset.defaultLabel;
+      submitControl.value = isSubmitting
+        ? "Sending..."
+        : submitControl.dataset.defaultLabel;
     }
   }
 
@@ -1363,7 +2558,8 @@ document.addEventListener("DOMContentLoaded", () => {
       email: readFieldValue(fields.email),
       phone: readFieldValue(fields.phone),
       company: readFieldValue(fields.company),
-      subject: readFieldValue(fields.subject) || `Website enquiry from ${currentPath}`,
+      subject:
+        readFieldValue(fields.subject) || `Website enquiry from ${currentPath}`,
       message: readFieldValue(fields.message),
       page: window.location.href || currentPath,
       preferredContact: readFieldValue(fields.preferredContact) || "Email",
@@ -1386,7 +2582,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function getErrorSummary(message, errors = {}) {
     const firstFieldMessage = Object.values(errors).find(Boolean);
-    return firstFieldMessage || message || "Please review the enquiry form and try again.";
+    return (
+      firstFieldMessage ||
+      message ||
+      "Please review the enquiry form and try again."
+    );
   }
 
   function initializeEnquiryForms() {
@@ -1423,13 +2623,21 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!response.ok || !data?.ok) {
             const errors = data?.errors || {};
             applyEnquiryErrors(fields, errors);
-            setEnquiryStatus(statusNode, "error", getErrorSummary(data?.message, errors));
+            setEnquiryStatus(
+              statusNode,
+              "error",
+              getErrorSummary(data?.message, errors),
+            );
             return;
           }
 
           form.reset();
           clearEnquiryErrors(fields);
-          setEnquiryStatus(statusNode, "success", data.message || "Enquiry sent successfully.");
+          setEnquiryStatus(
+            statusNode,
+            "success",
+            data.message || "Enquiry sent successfully.",
+          );
         } catch (_error) {
           const fallbackMessage = isFileProtocol
             ? "The enquiry backend is not reachable. Start the server and try again."
@@ -1441,18 +2649,4 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
 });
