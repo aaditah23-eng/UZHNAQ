@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentPath = (
     window.location.pathname.split("/").pop() || "index.html"
   ).toLowerCase();
+  const isAboutPage = currentPath === "about.html";
   const isExperimentHomepage = currentPath === "index-experiment.html";
   const homepagePaths = new Set(["index.html", "index-experiment.html"]);
   const isHomepageLike = homepagePaths.has(currentPath);
@@ -57,6 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
         description:
           "The latest public upload from the official UZHNAQ channel highlights heat-treatment capability, process control, and component durability.",
         watchUrl: "https://www.youtube.com/watch?v=IzcgKQa2tWQ",
+        image: "./assets/source/machines/021.png",
+        imageAlt: "Heat-treatment line at UZHNAQ",
       },
       instagramPosts: [
         {
@@ -64,18 +67,24 @@ document.addEventListener("DOMContentLoaded", () => {
           label: "Workshop Update",
           caption:
             "Transmission, reverse engineering, and gear development from the latest shop-floor post.",
+          image: "./assets/source/general/close-up-metallic-gear.jpg",
+          imageAlt: "Close-up of precision gears on a dark surface",
         },
         {
           shortcode: "DD_YGHVvSUI",
           label: "Component Spotlight",
           caption:
             "A recent production snapshot showing precision-machined components ready for the next stage.",
+          image: "./assets/source/general/DSC02783.JPG",
+          imageAlt: "Precision-machined gear components",
         },
         {
           shortcode: "DByBsQbPqGv",
           label: "Team Update",
           caption:
             "A recent company update shared through the official Instagram profile.",
+          image: "./assets/source/general/DSC02800.JPG",
+          imageAlt: "UZHNAQ team on the shop floor",
         },
       ],
     },
@@ -113,11 +122,12 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Skilled Workforce",
         copy: "Each product is backed by an experienced team committed to process discipline, quality checks, and timely execution.",
         icon: "workforce",
-        image: "./assets/source/brand/graphics/engineers.png",
-        imageAlt: "Engineering team illustration",
-        imageFit: "contain",
-        imagePadding: "10px 10px 0",
-        imageScale: "1.04",
+        image: "./assets/source/general/DSC02800.JPG",
+        imageAlt: "UZHNAQ workforce group photo",
+        imageFit: "cover",
+        imagePosition: "center 26%",
+        imagePadding: "0",
+        imageScale: "1.1",
         accent: "#7ed7ff",
         glow: "rgba(126, 215, 255, 0.28)",
         shadeA: "rgba(11, 28, 54, 0.95)",
@@ -171,10 +181,11 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Growing Global Reach",
         copy: "The export portfolio expanded with four additional countries, including Japan, reinforcing international confidence.",
         icon: "globeArrow",
-        image: "./assets/source/general/DSC02764.JPG",
-        imageAlt: "Precision components organized across production shelving",
+        image: "./assets/source/general/DSC02747.JPG",
+        imageAlt: "Finished precision gears prepared for global export orders",
         imageFit: "cover",
         imagePadding: "0",
+        imagePosition: "center",
         accent: "#57dfff",
         glow: "rgba(87, 223, 255, 0.28)",
         shadeA: "rgba(4, 47, 99, 0.95)",
@@ -185,10 +196,12 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Sealed Quench Upgrade",
         copy: "State-of-the-art heat-treatment capability strengthened consistency, hardness control, and component life.",
         icon: "heat",
-        image: "./assets/source/machines/020.png",
-        imageAlt: "Industrial heat treatment equipment",
+        image: "./assets/source/machines/021.png",
+        imageAlt: "Glowing components moving through the heat treatment line",
         imageFit: "cover",
         imagePadding: "0",
+        imagePosition: "center 46%",
+        imageScale: "1.06",
         accent: "#c7f24a",
         glow: "rgba(199, 242, 74, 0.28)",
         shadeA: "rgba(32, 47, 16, 0.94)",
@@ -323,6 +336,86 @@ document.addEventListener("DOMContentLoaded", () => {
     "Clearer machine groups and process coverage",
     "Faster path to brochure and enquiry actions",
   ];
+  const aboutHeroShowcaseSlides = [
+    {
+      id: "group-team",
+      image: "./assets/source/general/DSC02800.JPG",
+      imageAlt: "UZHNAQ workforce group photo",
+      imagePositionDesktop: "center 22%",
+      imagePositionMobile: "center 18%",
+      imageScaleDesktop: "1.045",
+      imageScaleMobile: "1.08",
+      imageScaleEndDesktop: "1",
+      imageScaleEndMobile: "1.03",
+      focusX: "74%",
+      focusY: "24%",
+      tint: "rgba(221, 243, 68, 0.14)",
+      edgeGlow: "rgba(120, 202, 255, 0.18)",
+    },
+    {
+      id: "worker-assembly",
+      image: "./assets/source/general/DSC02714.JPG",
+      imageAlt: "Worker assembling precision gears",
+      imagePositionDesktop: "center 20%",
+      imagePositionMobile: "center 16%",
+      imageScaleDesktop: "1.06",
+      imageScaleMobile: "1.12",
+      imageScaleEndDesktop: "1.015",
+      imageScaleEndMobile: "1.06",
+      focusX: "68%",
+      focusY: "28%",
+      tint: "rgba(221, 243, 68, 0.12)",
+      edgeGlow: "rgba(255, 255, 255, 0.12)",
+    },
+    {
+      id: "worker-inspection",
+      image: "./assets/source/general/DSC02695.JPG",
+      imageAlt: "Worker inspecting a precision component",
+      imagePositionDesktop: "center 18%",
+      imagePositionMobile: "center 16%",
+      imageScaleDesktop: "1.05",
+      imageScaleMobile: "1.11",
+      imageScaleEndDesktop: "1.01",
+      imageScaleEndMobile: "1.05",
+      focusX: "72%",
+      focusY: "26%",
+      tint: "rgba(95, 176, 255, 0.14)",
+      edgeGlow: "rgba(126, 215, 255, 0.14)",
+    },
+    {
+      id: "worker-machine",
+      image: "./assets/source/general/DSC02687.JPG",
+      imageAlt: "Worker operating machining equipment",
+      imagePositionDesktop: "center 24%",
+      imagePositionMobile: "center 20%",
+      imageScaleDesktop: "1.05",
+      imageScaleMobile: "1.1",
+      imageScaleEndDesktop: "1.01",
+      imageScaleEndMobile: "1.04",
+      focusX: "66%",
+      focusY: "30%",
+      tint: "rgba(255, 255, 255, 0.1)",
+      edgeGlow: "rgba(0, 111, 220, 0.14)",
+    },
+    {
+      id: "worker-bench",
+      image: "./assets/source/general/DSC02702.JPG",
+      imageAlt: "Worker handling a gear assembly at the workbench",
+      imagePositionDesktop: "center 18%",
+      imagePositionMobile: "center 16%",
+      imageScaleDesktop: "1.05",
+      imageScaleMobile: "1.1",
+      imageScaleEndDesktop: "1.01",
+      imageScaleEndMobile: "1.05",
+      focusX: "70%",
+      focusY: "28%",
+      tint: "rgba(221, 243, 68, 0.12)",
+      edgeGlow: "rgba(255, 255, 255, 0.12)",
+    },
+  ];
+  const aboutHeroShowcaseControllers = new WeakMap();
+  const aboutHeroSlideDurationMs = 6500;
+  let aboutHeroShowcaseStartTime = null;
 
   decorateHeaderNavigation();
   highlightActiveLinks();
@@ -332,6 +425,7 @@ document.addEventListener("DOMContentLoaded", () => {
   syncHomepageHeroMachine();
   initializeFooterEnhancements();
   initializeHomepageHeroBrochureCtas();
+  initializeAboutHeroShowcase();
   if (shouldMountHomepageInjectedSections) {
     initializeHomepageFactsGallery();
     initializeHomepageVideoGallery();
@@ -914,6 +1008,220 @@ document.addEventListener("DOMContentLoaded", () => {
         element.classList.add("site-home-copy-clean");
       }
     });
+  }
+
+  function buildAboutHeroSlideStyle(slide) {
+    return [
+      `--about-image-position-desktop:${slide.imagePositionDesktop}`,
+      `--about-image-position-mobile:${slide.imagePositionMobile}`,
+      slide.imageScaleDesktop
+        ? `--about-image-scale-desktop:${slide.imageScaleDesktop}`
+        : "",
+      slide.imageScaleMobile
+        ? `--about-image-scale-mobile:${slide.imageScaleMobile}`
+        : "",
+      slide.imageScaleEndDesktop
+        ? `--about-image-scale-end-desktop:${slide.imageScaleEndDesktop}`
+        : "",
+      slide.imageScaleEndMobile
+        ? `--about-image-scale-end-mobile:${slide.imageScaleEndMobile}`
+        : "",
+      `--about-focus-x:${slide.focusX}`,
+      `--about-focus-y:${slide.focusY}`,
+      `--about-slide-tint:${slide.tint}`,
+      `--about-edge-glow:${slide.edgeGlow}`,
+      slide.portraitTilt ? `--about-portrait-tilt:${slide.portraitTilt}` : "",
+      slide.portraitWidth
+        ? `--about-portrait-width:${slide.portraitWidth}`
+        : "",
+      slide.portraitRight
+        ? `--about-portrait-right:${slide.portraitRight}`
+        : "",
+      slide.portraitBottom
+        ? `--about-portrait-bottom:${slide.portraitBottom}`
+        : "",
+    ]
+      .filter(Boolean)
+      .join(";");
+  }
+
+  function buildAboutHeroShowcaseMarkup(variant) {
+    return `
+      <div
+        class="site-about-hero-showcase site-about-hero-showcase--${escapeAttribute(variant)}"
+        data-site-about-hero-showcase-root="true"
+        data-site-about-hero-variant="${escapeAttribute(variant)}"
+        data-site-about-hero-slide-index="0"
+        aria-hidden="true"
+      >
+        <div class="site-about-hero-slides">
+          ${aboutHeroShowcaseSlides
+            .map(
+              (slide, index) => `
+                <div
+                  class="site-about-hero-slide${index === 0 ? " is-active" : ""}"
+                  data-site-about-hero-slide="${index}"
+                  style="${buildAboutHeroSlideStyle(slide)}"
+                >
+                  <img
+                    class="site-about-hero-slide-image"
+                    src="${escapeAttribute(slide.image)}"
+                    alt=""
+                    ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+                    decoding="async"
+                  >
+                  <span class="site-about-hero-slide-glow" aria-hidden="true"></span>
+                </div>
+              `,
+            )
+            .join("")}
+        </div>
+      </div>
+    `;
+  }
+
+  function setActiveAboutHeroSlide(root, nextIndex) {
+    if (!(root instanceof HTMLElement)) {
+      return;
+    }
+
+    const slides = Array.from(
+      root.querySelectorAll("[data-site-about-hero-slide]"),
+    );
+
+    slides.forEach((slide, index) => {
+      if (!(slide instanceof HTMLElement)) {
+        return;
+      }
+
+      slide.classList.toggle("is-active", index === nextIndex);
+      slide.setAttribute("aria-hidden", index === nextIndex ? "false" : "true");
+    });
+
+    root.dataset.siteAboutHeroSlideIndex = String(nextIndex);
+  }
+
+  function syncAboutHeroProgress(progress) {
+    const normalizedProgress = Number(
+      Math.min(Math.max(progress, 0), 1).toFixed(4),
+    );
+    document
+      .querySelectorAll(
+        '#main[data-uzhnaq-hydrate-v2*="OqIkOPFU_"] :is(.uzhnaq-1xuhw5j, .uzhnaq-c8t7kq)',
+      )
+      .forEach((panel) => {
+        if (panel instanceof HTMLElement) {
+          panel.style.setProperty(
+            "--about-progress",
+            String(normalizedProgress),
+          );
+        }
+      });
+  }
+
+  function initializeAboutHeroAutoplay(root) {
+    if (
+      !(root instanceof HTMLElement) ||
+      aboutHeroShowcaseControllers.has(root)
+    ) {
+      return;
+    }
+
+    const slides = Array.from(
+      root.querySelectorAll("[data-site-about-hero-slide]"),
+    ).filter((slide) => slide instanceof HTMLElement);
+
+    if (!slides.length) {
+      return;
+    }
+
+    let activeIndex = 0;
+    setActiveAboutHeroSlide(root, activeIndex);
+    syncAboutHeroProgress(0);
+
+    // CSS owns the visual motion; JS only advances the active slide so the
+    // first frame still looks complete if the enhancement never runs.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      aboutHeroShowcaseControllers.set(root, { stop() {} });
+      return;
+    }
+
+    if (typeof aboutHeroShowcaseStartTime !== "number") {
+      aboutHeroShowcaseStartTime = performance.now();
+    }
+
+    const cycleDuration = slides.length * aboutHeroSlideDurationMs;
+    let frameId = 0;
+    let previousIndex = -1;
+
+    const step = (now) => {
+      const elapsed = Math.max(0, now - aboutHeroShowcaseStartTime);
+      const cycleProgress = (elapsed % cycleDuration) / cycleDuration;
+      const nextIndex =
+        Math.floor(cycleProgress * slides.length) % slides.length;
+
+      if (nextIndex !== previousIndex) {
+        setActiveAboutHeroSlide(root, nextIndex);
+        previousIndex = nextIndex;
+      }
+
+      syncAboutHeroProgress(cycleProgress);
+      frameId = window.requestAnimationFrame(step);
+    };
+
+    frameId = window.requestAnimationFrame(step);
+
+    aboutHeroShowcaseControllers.set(root, {
+      stop() {
+        window.cancelAnimationFrame(frameId);
+      },
+    });
+  }
+
+  function mountAboutHeroShowcase(target, variant) {
+    if (!(target instanceof HTMLElement)) {
+      return;
+    }
+
+    let showcase = target.querySelector("[data-site-about-hero-showcase-root]");
+    if (!(showcase instanceof HTMLElement)) {
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = buildAboutHeroShowcaseMarkup(variant);
+      showcase = wrapper.firstElementChild;
+      if (!(showcase instanceof HTMLElement)) {
+        return;
+      }
+
+      if (variant === "mobile") {
+        target.prepend(showcase);
+      } else {
+        target.appendChild(showcase);
+      }
+    }
+
+    initializeAboutHeroAutoplay(showcase);
+  }
+
+  function syncAboutHeroShowcase() {
+    if (!isAboutPage) {
+      return;
+    }
+
+    document
+      .querySelectorAll(
+        '#main[data-uzhnaq-hydrate-v2*="OqIkOPFU_"] .site-about-hero-background',
+      )
+      .forEach((mount) => mountAboutHeroShowcase(mount, "desktop"));
+
+    document
+      .querySelectorAll(
+        '#main[data-uzhnaq-hydrate-v2*="OqIkOPFU_"] .uzhnaq-mzx7zk',
+      )
+      .forEach((mount) => mountAboutHeroShowcase(mount, "mobile"));
+  }
+
+  function initializeAboutHeroShowcase() {
+    syncAboutHeroShowcase();
   }
 
   function buildIndustriesShowcaseMarkup() {
@@ -1524,14 +1832,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function buildYouTubeEmbed(video) {
-    const fallbackNote = isFileProtocol
-      ? `
-        <div class="yt-local-note">
-          Embedded YouTube playback can be blocked when opening the site directly from your computer. If that happens, run the site through a local server.
-        </div>
-      `
-      : "";
-
     return `
       <div class="yt-embed-shell">
         <iframe
@@ -1543,7 +1843,6 @@ document.addEventListener("DOMContentLoaded", () => {
           referrerpolicy="origin"
           allowfullscreen
         ></iframe>
-        ${fallbackNote}
       </div>
     `;
   }
@@ -1641,14 +1940,49 @@ document.addEventListener("DOMContentLoaded", () => {
   function buildHomepageSocialHubMarkup() {
     const latestVideo = siteResourceConfig.socialHub.latestYouTubeVideo;
     const latestInstagramPost = siteResourceConfig.socialHub.instagramPosts[0];
-    const instagramEmbedUrl = latestInstagramPost
-      ? `https://www.instagram.com/p/${latestInstagramPost.shortcode}/embed/`
-      : "";
+    const instagramPostUrl = latestInstagramPost
+      ? `https://www.instagram.com/p/${latestInstagramPost.shortcode}/`
+      : siteResourceConfig.social.instagram;
+    const instagramCards = siteResourceConfig.socialHub.instagramPosts
+      .map((post) => {
+        const postUrl = `https://www.instagram.com/p/${post.shortcode}/`;
+        return `
+          <a class="site-social-mini-card" href="${escapeAttribute(postUrl)}" target="_blank" rel="noopener">
+            <span class="site-social-mini-card-label">${escapeHtml(post.label)}</span>
+            <span class="site-social-mini-card-copy">${escapeHtml(post.caption)}</span>
+          </a>
+        `;
+      })
+      .join("");
+    const youtubeCards = siteResourceConfig.featuredVideos
+      .map((video) => {
+        const watchUrl = `https://www.youtube.com/watch?v=${video.id}`;
+        return `
+          <a class="site-social-mini-card site-social-mini-card--video" href="${escapeAttribute(watchUrl)}" target="_blank" rel="noopener">
+            <span class="site-social-mini-card-label">${escapeHtml(video.eyebrow)}</span>
+            <span class="site-social-mini-card-copy">${escapeHtml(video.title)}</span>
+          </a>
+        `;
+      })
+      .join("");
 
     return `
       <div class="site-social-hub-shell">
         <div class="site-social-hub-header">
-          <h2 class="site-social-hub-title">Socials</h2>
+          <div class="site-social-hub-intro">
+            <span class="site-social-hub-eyebrow">Official UZHNAQ Channels</span>
+            <h2 class="site-social-hub-title">Socials</h2>
+          </div>
+          <div class="site-social-hub-links" role="list" aria-label="UZHNAQ social channels">
+            <a class="site-social-hub-link" href="${escapeAttribute(siteResourceConfig.social.instagram)}" target="_blank" rel="noopener">
+              <span class="site-social-panel-icon" aria-hidden="true">${inlineFooterIcons.instagram}</span>
+              <span>Instagram</span>
+            </a>
+            <a class="site-social-hub-link" href="${escapeAttribute(siteResourceConfig.social.youtube)}" target="_blank" rel="noopener">
+              <span class="site-social-panel-icon" aria-hidden="true">${inlineFooterIcons.youtube}</span>
+              <span>YouTube</span>
+            </a>
+          </div>
         </div>
         <div class="site-social-hub-grid">
           <section class="site-social-panel site-social-panel--instagram">
@@ -1657,15 +1991,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="site-social-panel-icon" aria-hidden="true">${inlineFooterIcons.instagram}</span>
                 <h3 class="site-social-panel-title">Instagram</h3>
               </div>
+              <a class="site-social-panel-link" href="${escapeAttribute(siteResourceConfig.social.instagram)}" target="_blank" rel="noopener">
+                Open Feed
+              </a>
             </div>
-            <div class="site-instagram-feed-frame-shell">
-              <iframe
-                class="site-instagram-feed-embed"
-                src="${escapeAttribute(instagramEmbedUrl)}"
-                title="Latest Instagram post from UZHNAQ"
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin"
-              ></iframe>
+            <a class="site-social-preview-card" href="${escapeAttribute(instagramPostUrl)}" target="_blank" rel="noopener">
+              <div class="site-social-preview-media site-social-preview-media--instagram">
+                <img
+                  class="site-social-preview-image"
+                  src="${escapeAttribute(latestInstagramPost.image)}"
+                  alt="${escapeAttribute(latestInstagramPost.imageAlt || latestInstagramPost.label)}"
+                  loading="lazy"
+                >
+                <span class="site-social-preview-badge">Latest Post</span>
+              </div>
+              <div class="site-social-preview-copy">
+                <span class="site-social-preview-eyebrow">${escapeHtml(latestInstagramPost.label)}</span>
+                <h4 class="site-social-preview-title">${escapeHtml(latestInstagramPost.caption)}</h4>
+                <p class="site-social-preview-text">Open the official Instagram feed for factory-floor snapshots, product close-ups, and quick shop updates.</p>
+              </div>
+            </a>
+            <div class="site-social-mini-grid">
+              ${instagramCards}
             </div>
           </section>
           <section class="site-social-panel site-social-panel--youtube">
@@ -1674,9 +2021,33 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="site-social-panel-icon" aria-hidden="true">${inlineFooterIcons.youtube}</span>
                 <h3 class="site-social-panel-title">YouTube</h3>
               </div>
+              <a class="site-social-panel-link" href="${escapeAttribute(siteResourceConfig.social.youtube)}" target="_blank" rel="noopener">
+                Visit Channel
+              </a>
             </div>
-            <div class="site-social-youtube-frame">
-              ${buildYouTubeEmbed(latestVideo)}
+            <a class="site-social-preview-card site-social-preview-card--video" href="${escapeAttribute(latestVideo.watchUrl)}" target="_blank" rel="noopener">
+              <div class="site-social-preview-media site-social-preview-media--video">
+                <img
+                  class="site-social-preview-image"
+                  src="${escapeAttribute(latestVideo.image)}"
+                  alt="${escapeAttribute(latestVideo.imageAlt || latestVideo.title)}"
+                  loading="lazy"
+                >
+                <span class="site-social-preview-badge">Latest Upload</span>
+                <span class="site-social-preview-play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                    <path d="M8 6.5L18 12L8 17.5V6.5Z" fill="currentColor"></path>
+                  </svg>
+                </span>
+              </div>
+              <div class="site-social-preview-copy">
+                <span class="site-social-preview-eyebrow">${escapeHtml(latestVideo.eyebrow)}</span>
+                <h4 class="site-social-preview-title">${escapeHtml(latestVideo.title)}</h4>
+                <p class="site-social-preview-text">${escapeHtml(latestVideo.description)}</p>
+              </div>
+            </a>
+            <div class="site-social-mini-grid">
+              ${youtubeCards}
             </div>
           </section>
         </div>
@@ -1779,86 +2150,17 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function syncHomepageVideoGallery(attempt = 0) {
-    if (!isHomepageLike) {
-      return;
-    }
-
     const gallerySection = document.querySelector(
       "[data-site-video-gallery-mounted='true']",
     );
-    const visibleCarousel = findVisibleElement(".static-tech-carousel");
 
-    if (!(visibleCarousel instanceof HTMLElement)) {
-      if (!(gallerySection instanceof HTMLElement) && attempt < 8) {
-        window.setTimeout(
-          () => initializeHomepageVideoGallery(attempt + 1),
-          120,
-        );
-      }
+    if (gallerySection instanceof HTMLElement) {
+      gallerySection.remove();
+    }
+
+    if (!isHomepageLike) {
       return;
     }
-
-    let mountedSection = gallerySection;
-    if (!(mountedSection instanceof HTMLElement)) {
-      mountedSection = document.createElement("section");
-      mountedSection.className = "site-video-gallery-section";
-      mountedSection.id = "site-video-gallery-section";
-      mountedSection.dataset.siteVideoGalleryMounted = "true";
-      mountedSection.innerHTML = buildVideoGalleryMarkup();
-    }
-
-    if (mountedSection.previousElementSibling !== visibleCarousel) {
-      visibleCarousel.insertAdjacentElement("afterend", mountedSection);
-    }
-
-    if (mountedSection.dataset.siteVideoGalleryBound === "true") {
-      return;
-    }
-
-    const frameSlot = mountedSection.querySelector(
-      "[data-site-video-gallery-frame]",
-    );
-    const titleNode = mountedSection.querySelector(
-      "[data-site-video-gallery-title]",
-    );
-    const copyNode = mountedSection.querySelector(
-      "[data-site-video-gallery-copy]",
-    );
-    const cards = Array.from(
-      mountedSection.querySelectorAll("[data-site-video-card]"),
-    );
-
-    cards.forEach((card) => {
-      card.addEventListener("click", () => {
-        const videoId = card.getAttribute("data-video-id") || "";
-        const videoTitle = card.getAttribute("data-video-title") || "";
-        const videoCopy = card.getAttribute("data-video-copy") || "";
-
-        if (!(frameSlot instanceof HTMLElement) || !videoId || !videoTitle) {
-          return;
-        }
-
-        frameSlot.innerHTML = buildYouTubeEmbed({
-          id: videoId,
-          title: videoTitle,
-        });
-
-        if (titleNode instanceof HTMLElement) {
-          titleNode.textContent = videoTitle;
-        }
-
-        if (copyNode instanceof HTMLElement) {
-          copyNode.textContent = videoCopy;
-        }
-
-        cards.forEach((item) => {
-          const isActive = item === card;
-          item.classList.toggle("is-active", isActive);
-          item.setAttribute("aria-pressed", isActive ? "true" : "false");
-        });
-      });
-    });
-    mountedSection.dataset.siteVideoGalleryBound = "true";
   }
 
   function initializeHomepageVideoGallery(attempt = 0) {
@@ -1989,6 +2291,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateResponsiveFoundationMode();
     syncResponsiveNavigation();
     syncVisibleFooterAnchor();
+    syncAboutHeroShowcase();
     syncHomepageHeroMachine();
     syncHomepageTitleLoaderAccent();
     syncHomepageInjectedSections();

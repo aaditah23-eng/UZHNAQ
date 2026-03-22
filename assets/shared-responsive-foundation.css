@@ -105,6 +105,13 @@ body,
   animation-delay: calc(var(--ajax-index, 0) * 150ms);
 }
 
+[data-uzhnaq-root] [data-uzhnaq-name="Testimonials"] {
+  padding:
+    clamp(146px, 11vw, 182px)
+    clamp(18px, 3vw, 40px)
+    clamp(38px, 4.4vw, 56px) !important;
+}
+
 [data-home-hero-visual-placeholder="true"] {
   position: relative;
   display: block;
