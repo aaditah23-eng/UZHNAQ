@@ -331,11 +331,82 @@ document.addEventListener("DOMContentLoaded", () => {
       copy: "Precision-machined parts aligned to railway and mobility applications that demand repeatability and long service life.",
     },
   ];
-  const machinesOverviewHighlights = [
-    "Responsive machine catalogue coming soon",
-    "Clearer machine groups and process coverage",
-    "Faster path to brochure and enquiry actions",
+  const machineSuiteHeroHighlights = [
+    "Cutting, hobbing, grinding, and shaping in one suite",
+    "Heat treatment, finishing, and traceability support downstream quality",
+    "Built for gears, splines, shafts, and profile-critical components",
   ];
+  const machineSuiteTechnologyCards = [
+    {
+      eyebrow: "Machining",
+      title: "Multi-Axis Cutting",
+      copy: "High-precision cutting and milling setups handle complex profiles, tooth forms, and engineered surfaces with repeatable control.",
+      image: "./assets/source/machines/002.png",
+      imageAlt: "Multi-axis machining head cutting a metal component",
+    },
+    {
+      eyebrow: "Gear Hobbing",
+      title: "Tooth Generation",
+      copy: "Gear tooth generation remains central to the suite, shaping repeatable geometry for transmission-ready components and driveline parts.",
+      image: "./assets/source/machines/005.png",
+      imageAlt: "Gear hobbing process with lubricated metal gears",
+    },
+    {
+      eyebrow: "Grinding",
+      title: "Profile Refinement",
+      copy: "Grinding stages support accuracy, finish quality, and surface consistency where fit and final running behavior matter most.",
+      image: "./assets/source/machines/006.png",
+      imageAlt: "Grinding wheel refining a machined gear profile",
+    },
+    {
+      eyebrow: "Form Work",
+      title: "Spline and Profile Shaping",
+      copy: "Form-generation setups help the suite extend beyond simple gears into spline work and other precision profile requirements.",
+      image: "./assets/source/machines/007.png",
+      imageAlt: "Precision profile shaping operation on a metal component",
+    },
+    {
+      eyebrow: "Internal Geometry",
+      title: "Inner-Profile Machining",
+      copy: "Specialized internal and ring-form operations support demanding tooth patterns and enclosed geometries across multiple applications.",
+      image: "./assets/source/machines/008.png",
+      imageAlt: "Machining tool shaping an internal gear form",
+    },
+    {
+      eyebrow: "Heat Treatment",
+      title: "Controlled Hardness Flow",
+      copy: "Heat-treatment capability strengthens durability, wear resistance, and consistency so finished components hold performance in service.",
+      image: "./assets/source/machines/021.png",
+      imageAlt: "Glowing metal components moving through a heat treatment line",
+    },
+    {
+      eyebrow: "Finishing",
+      title: "Shaft and Surface Finishing",
+      copy: "Finishing operations help align shafts and related components to cleaner surfaces, tighter fits, and more dependable final readiness.",
+      image: "./assets/source/machines/013.png",
+      imageAlt: "Machining equipment finishing a cylindrical shaft component",
+    },
+    {
+      eyebrow: "Traceability",
+      title: "Marking and Identification",
+      copy: "Laser-style marking supports clearer identification, production traceability, and downstream handling once components leave core machining.",
+      image: "./assets/source/machines/018.png",
+      imageAlt: "Metal component being marked with a bright spark",
+    },
+  ];
+  const machineSuiteFeature = {
+    eyebrow: "Featured Capability",
+    title: "Heat treatment and controlled handling strengthen the full production chain.",
+    copy:
+      "Heat treatment extends the suite beyond machining alone, helping finished components hold hardness, wear resistance, and service consistency while supporting smoother downstream handling.",
+    image: "./assets/source/machines/020.png",
+    imageAlt: "Industrial heat-treatment line with conveyor and control panel",
+    bullets: [
+      "Supports hardness consistency and wear resistance",
+      "Maintains a stronger link between machining and final service life",
+      "Supports cleaner handoff into inspection, marking, and dispatch",
+    ],
+  };
   const aboutHeroShowcaseSlides = [
     {
       id: "group-team",
@@ -413,7 +484,70 @@ document.addEventListener("DOMContentLoaded", () => {
       edgeGlow: "rgba(255, 255, 255, 0.12)",
     },
   ];
+  const aboutProcessMapStations = [
+    {
+      id: "precision-manufacturing",
+      shortLabel: "Machining",
+      title: "Precision Gear Manufacturing",
+      description:
+        "Our team machines gears and engineered components to tight tolerances, keeping repeatability, fit, and long service life at the center of production.",
+      image: "./assets/source/general/DSC02714.JPG",
+      imageAlt: "Worker assembling precision gears on the shop floor",
+      x: 10,
+      y: 28,
+      stepLabel: "Station 01",
+    },
+    {
+      id: "heat-treatment",
+      shortLabel: "Heat Treat",
+      title: "Heat Treatment and Durability",
+      description:
+        "Controlled heat-treatment planning supports hardness consistency, wear resistance, and dependable durability across demanding operating conditions.",
+      image: "./assets/source/general/DSC02687.JPG",
+      imageAlt: "Worker operating production equipment on the shop floor",
+      x: 30,
+      y: 72,
+      stepLabel: "Station 02",
+    },
+    {
+      id: "inspection",
+      shortLabel: "Inspection",
+      title: "Inspection and Quality Control",
+      description:
+        "Operators and inspectors verify critical dimensions, finish quality, and readiness before components move into the next stage of handling.",
+      image: "./assets/source/general/DSC02695.JPG",
+      imageAlt: "Worker inspecting a precision-machined component",
+      x: 50,
+      y: 26,
+      stepLabel: "Station 03",
+    },
+    {
+      id: "workforce",
+      shortLabel: "Workforce",
+      title: "Workforce-Led Execution",
+      description:
+        "Engineers, technicians, and shop-floor operators stay closely involved from setup and machining through checks, handling, and finishing.",
+      image: "./assets/source/general/DSC02800.JPG",
+      imageAlt: "UZHNAQ workforce group photo",
+      x: 70,
+      y: 70,
+      stepLabel: "Station 04",
+    },
+    {
+      id: "dispatch",
+      shortLabel: "Dispatch",
+      title: "Export Readiness and Dispatch",
+      description:
+        "Finished components move forward with a delivery mindset, supporting domestic commitments and export-bound orders with the same process discipline.",
+      image: "./assets/source/general/DSC02702.JPG",
+      imageAlt: "Worker handling a gear assembly at the workbench",
+      x: 90,
+      y: 30,
+      stepLabel: "Station 05",
+    },
+  ];
   const aboutHeroShowcaseControllers = new WeakMap();
+  const aboutProcessMapControllers = new WeakMap();
   const aboutHeroSlideDurationMs = 6500;
   let aboutHeroShowcaseStartTime = null;
 
@@ -1224,6 +1358,304 @@ document.addEventListener("DOMContentLoaded", () => {
     syncAboutHeroShowcase();
   }
 
+  function buildAboutProcessConnectorPath(
+    stations,
+    svgWidth = 1600,
+    svgHeight = 620,
+  ) {
+
+    if (!Array.isArray(stations) || stations.length === 0) {
+      return "";
+    }
+
+    // Station coordinates are authored as percentages so the same source data can
+    // position CSS hotspot buttons and generate the SVG connector route.
+    const points = stations.map((station) => ({
+      x: (Number(station.x) / 100) * svgWidth,
+      y: (Number(station.y) / 100) * svgHeight,
+    }));
+
+    let path = `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+
+    for (let index = 1; index < points.length; index += 1) {
+      const previous = points[index - 1];
+      const current = points[index];
+      const deltaX = current.x - previous.x;
+      const controlOneX = previous.x + deltaX * 0.42;
+      const controlTwoX = previous.x + deltaX * 0.58;
+
+      path += ` C ${controlOneX.toFixed(2)} ${previous.y.toFixed(2)}, ${controlTwoX.toFixed(2)} ${current.y.toFixed(2)}, ${current.x.toFixed(2)} ${current.y.toFixed(2)}`;
+    }
+
+    return path;
+  }
+
+  function buildAboutCapabilitiesMarkup() {
+    const connectorPath = buildAboutProcessConnectorPath(
+      aboutProcessMapStations,
+      1600,
+      620,
+    );
+
+    return `
+      <section class="site-about-process-stage" data-site-about-capabilities-mounted="true" data-site-about-process-root="true" aria-labelledby="site-about-process-heading">
+        <div class="site-about-process-header">
+          <div class="site-about-process-header-copy">
+            <span class="site-about-process-kicker">Process Map</span>
+            <h2 class="site-about-process-title" id="site-about-process-heading">What we do</h2>
+          </div>
+          <p class="site-about-process-intro">
+            Hover, focus, or tap each station to follow how people, process discipline, and inspection work together from machining through dispatch.
+          </p>
+        </div>
+        <div class="site-about-process-visual" aria-label="Interactive production process map">
+          <div class="site-about-process-diagram-panel">
+            <div class="site-about-process-diagram">
+              <svg class="site-about-process-diagram-svg" viewBox="0 0 1600 620" role="presentation" focusable="false" aria-hidden="true">
+                <defs>
+                  <linearGradient id="site-about-process-route-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ddf344"></stop>
+                    <stop offset="52%" stop-color="#8fe0ff"></stop>
+                    <stop offset="100%" stop-color="#f7fbff"></stop>
+                  </linearGradient>
+                  <radialGradient id="site-about-process-core-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="rgba(221, 243, 68, 0.48)"></stop>
+                    <stop offset="100%" stop-color="rgba(91, 198, 255, 0)"></stop>
+                  </radialGradient>
+                </defs>
+                <g class="site-about-process-bg-grid">
+                  <path d="M 92 118 H 1510"></path>
+                  <path d="M 92 226 H 1508"></path>
+                  <path d="M 92 334 H 1510"></path>
+                  <path d="M 92 442 H 1508"></path>
+                  <path d="M 168 52 V 560"></path>
+                  <path d="M 458 52 V 560"></path>
+                  <path d="M 780 52 V 560"></path>
+                  <path d="M 1106 52 V 560"></path>
+                  <path d="M 1428 52 V 560"></path>
+                </g>
+                <g class="site-about-process-blueprint">
+                  <circle cx="170" cy="176" r="96"></circle>
+                  <circle cx="488" cy="438" r="82"></circle>
+                  <circle cx="808" cy="172" r="94"></circle>
+                  <circle cx="1122" cy="430" r="84"></circle>
+                  <circle cx="1438" cy="188" r="98"></circle>
+                </g>
+                <path class="site-about-process-route-shadow" d="${escapeAttribute(connectorPath)}"></path>
+                <path class="site-about-process-route" d="${escapeAttribute(connectorPath)}"></path>
+                ${aboutProcessMapStations
+                  .map(
+                    (station) => `
+                      <g class="site-about-process-diagram-ping" transform="translate(${(station.x / 100) * 1600} ${(station.y / 100) * 620})">
+                        <circle r="54"></circle>
+                        <circle r="32"></circle>
+                      </g>
+                    `,
+                  )
+                  .join("")}
+              </svg>
+              <div class="site-about-process-hotspots">
+                ${aboutProcessMapStations
+                  .map(
+                    (station, index) => `
+                      <button
+                        type="button"
+                        class="site-about-process-node${index === 0 ? " is-active" : ""}"
+                        data-site-about-process-node
+                        data-site-about-process-index="${index}"
+                        style="--site-about-process-x:${escapeAttribute(station.x)}%;--site-about-process-y:${escapeAttribute(station.y)}%;--site-about-process-translate-x:${station.x < 16 ? "0%" : station.x > 84 ? "-100%" : "-50%"};--site-about-process-align:${station.x < 16 ? "flex-start" : station.x > 84 ? "flex-end" : "center"};--site-about-process-text-align:${station.x < 16 ? "left" : station.x > 84 ? "right" : "center"};"
+                        aria-pressed="${index === 0 ? "true" : "false"}"
+                        aria-controls="site-about-process-card-${escapeAttribute(station.id)}"
+                      >
+                        <span class="site-about-process-node-step">${escapeHtml(station.stepLabel)}</span>
+                        <span class="site-about-process-node-card">
+                          <span class="site-about-process-node-thumb">
+                            <img
+                              src="${escapeAttribute(station.image)}"
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            >
+                            <span class="site-about-process-node-core">
+                              <span class="site-about-process-node-dot"></span>
+                            </span>
+                          </span>
+                          <span class="site-about-process-node-copy">
+                            <strong>${escapeHtml(station.shortLabel)}</strong>
+                            <span>${escapeHtml(station.title)}</span>
+                          </span>
+                        </span>
+                      </button>
+                    `,
+                  )
+                  .join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="site-about-process-panel">
+          <div class="site-about-process-panel-stack" data-site-about-process-panel-stack aria-live="polite">
+            ${aboutProcessMapStations
+              .map(
+                (station, index) => `
+                  <article
+                    class="site-about-process-card${index === 0 ? " is-active" : ""}"
+                    data-site-about-process-card
+                    id="site-about-process-card-${escapeAttribute(station.id)}"
+                    aria-hidden="${index === 0 ? "false" : "true"}"
+                  >
+                    <div class="site-about-process-card-media">
+                      <img
+                        class="site-about-process-card-image"
+                        src="${escapeAttribute(station.image)}"
+                        alt="${escapeAttribute(station.imageAlt)}"
+                        loading="lazy"
+                        decoding="async"
+                      >
+                      <div class="site-about-process-card-overlay"></div>
+                    </div>
+                    <div class="site-about-process-card-copy">
+                      <span class="site-about-process-card-step">${escapeHtml(station.stepLabel)}</span>
+                      <h3>${escapeHtml(station.title)}</h3>
+                      <p>${escapeHtml(station.description)}</p>
+                      <div class="site-about-process-card-footer">
+                        <span>People + Process</span>
+                        <strong>${escapeHtml(station.shortLabel)}</strong>
+                      </div>
+                    </div>
+                  </article>
+                `,
+              )
+              .join("")}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function setActiveAboutProcessMapStation(root, nextIndex) {
+    if (!(root instanceof HTMLElement)) {
+      return;
+    }
+
+    const buttons = Array.from(
+      root.querySelectorAll("[data-site-about-process-node]"),
+    );
+    const cards = Array.from(
+      root.querySelectorAll("[data-site-about-process-card]"),
+    );
+
+    if (buttons.length === 0 || cards.length === 0) {
+      return;
+    }
+
+    const safeIndex = Math.max(0, Math.min(nextIndex, buttons.length - 1));
+
+    buttons.forEach((button, index) => {
+      const isActive = index === safeIndex;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+
+    cards.forEach((card, index) => {
+      const isActive = index === safeIndex;
+      card.classList.toggle("is-active", isActive);
+      card.setAttribute("aria-hidden", isActive ? "false" : "true");
+    });
+
+    root.dataset.siteAboutProcessActiveIndex = String(safeIndex);
+  }
+
+  function initializeAboutProcessMap(root) {
+    if (!(root instanceof HTMLElement)) {
+      return;
+    }
+
+    if (aboutProcessMapControllers.has(root)) {
+      return;
+    }
+
+    const buttons = Array.from(
+      root.querySelectorAll("[data-site-about-process-node]"),
+    );
+
+    if (buttons.length === 0) {
+      return;
+    }
+
+    const activateStation = (index) =>
+      setActiveAboutProcessMapStation(root, index);
+
+    buttons.forEach((button, index) => {
+      button.addEventListener("mouseenter", () => {
+        if (window.matchMedia("(hover: hover)").matches) {
+          activateStation(index);
+        }
+      });
+      button.addEventListener("focus", () => activateStation(index));
+      button.addEventListener("click", () => activateStation(index));
+    });
+
+    setActiveAboutProcessMapStation(root, 0);
+    root.dataset.siteAboutProcessBound = "true";
+    aboutProcessMapControllers.set(root, { activateStation });
+  }
+
+  function syncAboutCapabilitiesSection() {
+    if (!isAboutPage) {
+      return;
+    }
+
+    document
+      .querySelectorAll('#main[data-uzhnaq-hydrate-v2*="OqIkOPFU_"] .uzhnaq-ca78av')
+      .forEach((content) => {
+        if (!(content instanceof HTMLElement)) {
+          return;
+        }
+
+        const existingRoot = content.querySelector(
+          "[data-site-about-process-root='true']",
+        );
+        if (existingRoot instanceof HTMLElement) {
+          initializeAboutProcessMap(existingRoot);
+          return;
+        }
+
+        const heading = Array.from(
+          content.querySelectorAll("h1, h2, h3, p"),
+        ).find(
+          (node) =>
+            node instanceof HTMLElement &&
+            /what\s+we\s+do/i.test(node.textContent || ""),
+        );
+
+        if (!(heading instanceof HTMLElement)) {
+          return;
+        }
+
+        content.classList.remove("site-about-capabilities-mount");
+        content.classList.add("site-about-process-mount");
+        content.innerHTML = buildAboutCapabilitiesMarkup();
+
+        const shell = content.parentElement;
+        if (shell instanceof HTMLElement) {
+          shell.classList.remove("site-about-capabilities-shell");
+          shell.classList.add("site-about-process-shell-host");
+        }
+
+        const legacyMedia = content.previousElementSibling;
+        if (legacyMedia instanceof HTMLElement) {
+          legacyMedia.classList.remove("site-about-capabilities-legacy-media");
+          legacyMedia.classList.add("site-about-process-legacy-media");
+        }
+
+        const root = content.querySelector("[data-site-about-process-root='true']");
+        if (root instanceof HTMLElement) {
+          initializeAboutProcessMap(root);
+        }
+      });
+  }
+
   function buildIndustriesShowcaseMarkup() {
     return `
       <section class="site-industries-grid-section" data-site-industries-grid-mounted="true" aria-labelledby="site-industries-grid-heading">
@@ -1258,33 +1690,164 @@ document.addEventListener("DOMContentLoaded", () => {
     return `
       <section class="site-machines-overview-section" data-site-machines-overview-mounted="true" aria-labelledby="site-machines-overview-heading">
         <div class="site-machines-overview-shell">
-          <div class="site-machines-overview-copy">
-            <p class="site-machines-eyebrow">Machine Suite</p>
-            <h1 id="site-machines-overview-heading">Machine suite updates are on the way.</h1>
-            <p class="site-machines-intro">
-              We are rebuilding this page so machine coverage is easier to browse across desktop, tablet, and mobile.
-              Until the full release is ready, you can explore the core product range or send us an enquiry directly.
-            </p>
-            <ul class="site-machines-highlight-list">
-              ${machinesOverviewHighlights.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-            </ul>
-            <div class="site-machines-actions">
-              <a class="site-machines-action site-machines-action--primary" href="./products.html">Explore Products</a>
-              <a class="site-machines-action site-machines-action--secondary" href="./contact.html">Enquire Now</a>
+          <section class="site-machines-hero" aria-labelledby="site-machines-overview-heading">
+            <div class="site-machines-overview-copy">
+              <p class="site-machines-eyebrow">Machine Suite</p>
+              <h1 id="site-machines-overview-heading">Integrated machining, finishing, and heat treatment in one production suite.</h1>
+              <p class="site-machines-intro">
+                Explore the equipment and process stages behind gears, splines, shafts, and profile-critical components,
+                from cutting and tooth generation through grinding, hardening, finishing, and dispatch readiness.
+              </p>
+              <ul class="site-machines-highlight-list">
+                ${machineSuiteHeroHighlights
+                  .map((item) => `<li>${escapeHtml(item)}</li>`)
+                  .join("")}
+              </ul>
+              <div class="site-machines-actions">
+                <a class="site-machines-action site-machines-action--primary" href="${escapeAttribute(siteResourceConfig.brochure.viewUrl)}" target="_blank" rel="noopener">View Company Profile</a>
+                <a class="site-machines-action site-machines-action--secondary" href="./products.html">Explore Products</a>
+                <a class="site-machines-action site-machines-action--secondary" href="./contact.html">Enquire Now</a>
+              </div>
             </div>
-          </div>
-          <aside class="site-machines-overview-panel" aria-label="Upcoming machine coverage">
-            <p class="site-machines-panel-eyebrow">Next Up</p>
-            <h2>Better structure, cleaner navigation, and clearer technical storytelling.</h2>
-            <p>
-              The upcoming machine page will group equipment more cleanly, reduce visual clutter, and make brochure and enquiry
-              actions easier to reach at every breakpoint.
-            </p>
-            <a class="site-machines-panel-link" href="${escapeAttribute(siteResourceConfig.brochure.viewUrl)}" target="_blank" rel="noopener">View Company Profile</a>
-          </aside>
+            <div class="site-machines-hero-visual" aria-hidden="true">
+              <article
+                class="site-machines-visual-card site-machines-visual-card--main"
+                style="background-image:url('./assets/source/machines/002.png');--site-machine-card-position:center"
+              ></article>
+              <article
+                class="site-machines-visual-card site-machines-visual-card--tall"
+                style="background-image:url('./assets/source/machines/006.png');--site-machine-card-position:center"
+              ></article>
+              <article
+                class="site-machines-visual-card site-machines-visual-card--accent"
+                style="background-image:url('./assets/source/machines/021.png');--site-machine-card-position:center 46%"
+              ></article>
+            </div>
+          </section>
+
+          <section class="site-machines-technology-section" aria-labelledby="site-machines-tech-heading">
+            <div class="site-machines-technology-header">
+              <p class="site-machines-panel-eyebrow">Advanced Technology</p>
+              <h2 id="site-machines-tech-heading">Key process stations across the machine suite.</h2>
+              <p>
+                Each station below highlights a specific capability within the production chain, making it easier to understand how machining, refinement, hardening, and traceability work together.
+              </p>
+            </div>
+            <div class="site-machines-stage-list" role="list">
+              ${machineSuiteTechnologyCards
+                .map(
+                  (card, index) => `
+                    <article class="site-machines-stage" role="listitem">
+                      <div class="site-machines-stage-track" aria-hidden="true">
+                        <span class="site-machines-stage-node"></span>
+                        ${
+                          index < machineSuiteTechnologyCards.length - 1
+                            ? '<span class="site-machines-stage-line"></span>'
+                            : ""
+                        }
+                      </div>
+                      <div
+                        class="site-machines-stage-media"
+                        role="img"
+                        aria-label="${escapeAttribute(card.imageAlt)}"
+                        style="background-image:url('${escapeAttribute(card.image)}')"
+                      ></div>
+                      <div class="site-machines-stage-copy">
+                        <span class="site-machines-stage-index">${String(index + 1).padStart(2, "0")}</span>
+                        <span class="site-machines-panel-eyebrow">${escapeHtml(card.eyebrow)}</span>
+                        <h3>${escapeHtml(card.title)}</h3>
+                        <p>${escapeHtml(card.copy)}</p>
+                      </div>
+                    </article>
+                  `,
+                )
+                .join("")}
+            </div>
+          </section>
+
+          <section class="site-machines-feature-panel" aria-labelledby="site-machines-feature-heading">
+            <div
+              class="site-machines-feature-media"
+              role="img"
+              aria-label="${escapeAttribute(machineSuiteFeature.imageAlt)}"
+              style="background-image:url('${escapeAttribute(machineSuiteFeature.image)}')"
+            ></div>
+            <div class="site-machines-feature-copy">
+              <p class="site-machines-panel-eyebrow">${escapeHtml(machineSuiteFeature.eyebrow)}</p>
+              <h2 id="site-machines-feature-heading">${escapeHtml(machineSuiteFeature.title)}</h2>
+              <p>${escapeHtml(machineSuiteFeature.copy)}</p>
+              <ul class="site-machines-feature-list">
+                ${machineSuiteFeature.bullets
+                  .map((item) => `<li>${escapeHtml(item)}</li>`)
+                  .join("")}
+              </ul>
+            </div>
+          </section>
         </div>
       </section>
     `;
+  }
+
+  function findTopLevelChild(root, element) {
+    if (!(root instanceof HTMLElement) || !(element instanceof HTMLElement)) {
+      return null;
+    }
+
+    let current = element;
+    while (current.parentElement && current.parentElement !== root) {
+      current = current.parentElement;
+    }
+
+    return current.parentElement === root ? current : null;
+  }
+
+  function hideLegacyMachinesRouteContent(section, root, footerAnchor = null) {
+    if (
+      !(section instanceof HTMLElement) ||
+      !(root instanceof HTMLElement) ||
+      section.parentElement !== root
+    ) {
+      return;
+    }
+
+    Array.from(root.children).forEach((child) => {
+      if (!(child instanceof HTMLElement) || child === section) {
+        return;
+      }
+
+      if (child === footerAnchor) {
+        return;
+      }
+
+      const containsFooter =
+        child.matches(".site-footer-wrapper, .footer-live-root") ||
+        child.querySelector(
+          "#site-footer-shell, .site-footer-shell, .site-footer-mounted",
+        );
+
+      if (containsFooter) {
+        return;
+      }
+
+      const isAfterSection =
+        (section.compareDocumentPosition(child) &
+          Node.DOCUMENT_POSITION_FOLLOWING) !==
+        0;
+
+      const isBeforeFooter =
+        !(footerAnchor instanceof HTMLElement) ||
+        (child.compareDocumentPosition(footerAnchor) &
+          Node.DOCUMENT_POSITION_FOLLOWING) !==
+          0;
+
+      if (!isAfterSection || !isBeforeFooter) {
+        return;
+      }
+
+      child.hidden = true;
+      child.setAttribute("aria-hidden", "true");
+      child.classList.add("site-machines-legacy-hidden");
+    });
   }
 
   function buildYouTubeEmbedUrl(videoId) {
@@ -2292,6 +2855,7 @@ document.addEventListener("DOMContentLoaded", () => {
     syncResponsiveNavigation();
     syncVisibleFooterAnchor();
     syncAboutHeroShowcase();
+    syncAboutCapabilitiesSection();
     syncHomepageHeroMachine();
     syncHomepageTitleLoaderAccent();
     syncHomepageInjectedSections();
@@ -2404,8 +2968,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const navAnchor = findVisibleElement(
       '#main[data-uzhnaq-hydrate-v2*="D8q3x66Ry"] nav[data-uzhnaq-name]',
     );
+    const root = navAnchor instanceof HTMLElement ? navAnchor.closest("[data-uzhnaq-root]") : null;
+    const navShell =
+      root instanceof HTMLElement && navAnchor instanceof HTMLElement
+        ? findTopLevelChild(root, navAnchor)
+        : null;
+    const footerShell = document.getElementById("site-footer-shell");
+    const footerAnchor =
+      root instanceof HTMLElement && footerShell instanceof HTMLElement
+        ? findTopLevelChild(root, footerShell)
+        : null;
 
-    if (!(navAnchor instanceof HTMLElement)) {
+    if (
+      !(navAnchor instanceof HTMLElement) ||
+      !(root instanceof HTMLElement) ||
+      !(navShell instanceof HTMLElement) ||
+      !(footerAnchor instanceof HTMLElement)
+    ) {
       if (!(mountedSection instanceof HTMLElement) && attempt < 8) {
         window.setTimeout(() => syncMachinesOverview(attempt + 1), 140);
       }
@@ -2423,9 +3002,15 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (section.previousElementSibling !== navAnchor) {
-      navAnchor.insertAdjacentElement("afterend", section);
+    if (section.parentElement !== root) {
+      root.insertBefore(section, footerAnchor);
     }
+
+    if (section.previousElementSibling !== navShell) {
+      navShell.insertAdjacentElement("afterend", section);
+    }
+
+    hideLegacyMachinesRouteContent(section, root, footerAnchor);
   }
 
   function syncResponsiveNavigation() {

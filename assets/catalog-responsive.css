@@ -334,3 +334,654 @@
     width: 100%;
   }
 }
+
+/* Machine Suite Rework */
+.site-machines-overview-section {
+  position: relative;
+  width: min(1380px, calc(100vw - 24px));
+  max-width: min(1380px, calc(100vw - 24px));
+  margin-block: clamp(28px, 5vw, 56px) clamp(44px, 7vw, 84px);
+  padding: clamp(12px, 1.6vw, 18px);
+  border-radius: 40px;
+  background:
+    radial-gradient(circle at top right, rgba(220, 246, 54, 0.08), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(47, 120, 255, 0.08), transparent 34%),
+    linear-gradient(180deg, #07111d 0%, #030814 100%);
+  box-shadow: 0 34px 78px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.site-machines-overview-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.26;
+  pointer-events: none;
+}
+
+.site-machines-overview-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(22px, 3vw, 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.site-machines-hero,
+.site-machines-technology-section,
+.site-machines-feature-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(126, 215, 255, 0.16);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top right, rgba(220, 246, 54, 0.08), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(47, 120, 255, 0.1), transparent 32%),
+    linear-gradient(180deg, #091121 0%, #050a16 100%);
+  box-shadow: 0 30px 72px rgba(0, 0, 0, 0.26);
+}
+
+.site-machines-hero::before,
+.site-machines-technology-section::before,
+.site-machines-feature-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.82), transparent 100%);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.site-machines-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.88fr);
+  gap: clamp(24px, 3.2vw, 38px);
+  align-items: center;
+  padding: clamp(24px, 3.5vw, 42px);
+}
+
+.site-machines-overview-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 14px;
+}
+
+.site-machines-overview-copy h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 5.2rem);
+  line-height: 0.95;
+}
+
+.site-machines-intro {
+  max-width: 44rem;
+}
+
+.site-machines-highlight-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.site-machines-highlight-list li {
+  min-height: 100%;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(8, 15, 29, 0.82);
+}
+
+.site-machines-actions {
+  margin-top: 10px;
+}
+
+.site-machines-hero-visual {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.82fr);
+  grid-template-rows: minmax(220px, 1fr) minmax(160px, 0.84fr);
+  gap: 16px;
+  min-height: 500px;
+}
+
+.site-machines-visual-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(7, 12, 22, 0.96);
+  background-position: var(--site-machine-card-position, center);
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow:
+    0 20px 44px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.site-machines-visual-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(2, 5, 10, 0.08), rgba(4, 8, 16, 0.68)),
+    linear-gradient(135deg, rgba(220, 246, 54, 0.12), transparent 36%, transparent 66%, rgba(47, 120, 255, 0.18));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.site-machines-visual-card--main {
+  grid-row: 1 / span 2;
+}
+
+.site-machines-technology-section,
+.site-machines-feature-panel {
+  padding: clamp(24px, 3.2vw, 38px);
+}
+
+.site-machines-technology-header {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 12px;
+  max-width: 58rem;
+  margin-bottom: clamp(20px, 3vw, 28px);
+}
+
+.site-machines-technology-header h2,
+.site-machines-feature-copy h2 {
+  margin: 0;
+  color: #f6f8ff;
+  line-height: 1.04;
+}
+
+.site-machines-technology-header h2 {
+  font-size: clamp(2rem, 3.8vw, 3.5rem);
+}
+
+.site-machines-technology-header p,
+.site-machines-feature-copy p {
+  margin: 0;
+  color: rgba(242, 244, 248, 0.76);
+  line-height: 1.72;
+}
+
+.site-machines-technology-header {
+  max-width: 64rem;
+}
+
+.site-machines-technology-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 22px);
+}
+
+.site-machines-technology-card {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-height: 100%;
+  padding: 16px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(12, 21, 41, 0.92), rgba(6, 11, 23, 0.98));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.site-machines-technology-card:hover,
+.site-machines-technology-card:focus-within {
+  transform: translateY(-3px);
+  border-color: rgba(220, 246, 54, 0.24);
+}
+
+.site-machines-technology-media {
+  overflow: hidden;
+  aspect-ratio: 1.18;
+  border-radius: 18px;
+  background: rgba(4, 9, 18, 0.94);
+}
+
+.site-machines-technology-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-machines-technology-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.site-machines-technology-copy h3 {
+  margin: 0;
+  color: #f7f9ff;
+  font-size: clamp(1.05rem, 1.5vw, 1.28rem);
+  line-height: 1.12;
+}
+
+.site-machines-technology-copy p {
+  margin: 0;
+  color: rgba(242, 244, 248, 0.72);
+  line-height: 1.62;
+  font-size: 0.94rem;
+}
+
+.site-machines-feature-panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(340px, 0.78fr) minmax(0, 1fr);
+  gap: clamp(22px, 3vw, 34px);
+  align-items: center;
+}
+
+.site-machines-feature-media {
+  overflow: hidden;
+  min-height: 100%;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(7, 12, 22, 0.96);
+}
+
+.site-machines-feature-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.site-machines-feature-copy {
+  display: grid;
+  gap: 14px;
+}
+
+.site-machines-feature-copy h2 {
+  font-size: clamp(2rem, 3.6vw, 3.4rem);
+}
+
+.site-machines-feature-list {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-machines-feature-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: rgba(242, 244, 248, 0.84);
+  line-height: 1.6;
+}
+
+.site-machines-feature-list li::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-top: 0.45rem;
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #dcf636, #2f78ff);
+  box-shadow: 0 0 16px rgba(220, 246, 54, 0.28);
+}
+
+@media (max-width: 1199px) {
+  .site-machines-overview-section {
+    width: min(100%, calc(100vw - 24px));
+    max-width: min(100%, calc(100vw - 24px));
+  }
+
+  .site-machines-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .site-machines-highlight-list {
+    grid-template-columns: 1fr;
+  }
+
+  .site-machines-hero-visual {
+    min-height: 420px;
+  }
+
+  .site-machines-technology-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-machines-feature-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 809px) {
+  .site-machines-overview-section {
+    width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
+    margin-block: 18px 48px;
+    padding: 10px;
+    border-radius: 28px;
+  }
+
+  .site-machines-hero,
+  .site-machines-technology-section,
+  .site-machines-feature-panel {
+    border-radius: 24px;
+  }
+
+  .site-machines-hero {
+    padding: 20px 16px;
+    gap: 18px;
+  }
+
+  .site-machines-overview-copy h1 {
+    font-size: clamp(2.2rem, 10vw, 3.5rem);
+  }
+
+  .site-machines-hero-visual {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(180px, 220px) minmax(150px, 180px) minmax(140px, 170px);
+    min-height: 0;
+  }
+
+  .site-machines-visual-card--main {
+    grid-row: auto;
+  }
+
+  .site-machines-technology-section,
+  .site-machines-feature-panel {
+    padding: 20px 16px;
+  }
+
+  .site-machines-technology-header h2,
+  .site-machines-feature-copy h2 {
+    font-size: clamp(1.7rem, 8vw, 2.4rem);
+  }
+
+  .site-machines-technology-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-machines-actions {
+    flex-direction: column;
+  }
+
+  .site-machines-action {
+    width: 100%;
+  }
+
+  .site-machines-feature-media img {
+    min-height: 220px;
+  }
+}
+
+/* Machine Suite Override Pass */
+.site-machines-overview-section {
+  margin-block: clamp(18px, 3vw, 30px) 18px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.site-machines-overview-section::before {
+  inset: 0 0 auto;
+  height: clamp(240px, 28vw, 380px);
+  background:
+    radial-gradient(circle at top right, rgba(220, 246, 54, 0.12), transparent 28%),
+    radial-gradient(circle at 16% 88%, rgba(47, 120, 255, 0.14), transparent 34%),
+    linear-gradient(180deg, rgba(7, 17, 29, 0.96), rgba(7, 17, 29, 0));
+  opacity: 1;
+}
+
+.site-machines-overview-shell {
+  gap: clamp(18px, 2.2vw, 24px);
+}
+
+.site-machines-hero,
+.site-machines-technology-section,
+.site-machines-feature-panel {
+  border-radius: 30px;
+  border-color: rgba(126, 215, 255, 0.14);
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.2);
+}
+
+.site-machines-hero::before,
+.site-machines-technology-section::before,
+.site-machines-feature-panel::before {
+  opacity: 0.22;
+}
+
+.site-machines-hero {
+  grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.82fr);
+  gap: clamp(22px, 2.6vw, 32px);
+  padding: clamp(24px, 3vw, 38px);
+}
+
+.site-machines-overview-copy h1 {
+  font-size: clamp(2.3rem, 4.8vw, 4.9rem);
+}
+
+.site-machines-highlight-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.site-machines-highlight-list li {
+  min-height: 0;
+  max-width: 18rem;
+  padding: 11px 14px;
+  border-radius: 999px;
+  font-size: 0.94rem;
+}
+
+.site-machines-hero-visual {
+  min-height: 470px;
+}
+
+.site-machines-visual-card {
+  border-radius: 26px;
+}
+
+.site-machines-technology-section,
+.site-machines-feature-panel {
+  padding: clamp(22px, 2.6vw, 34px);
+}
+
+.site-machines-technology-header {
+  gap: 10px;
+  max-width: 64rem;
+  margin-bottom: clamp(18px, 2.5vw, 24px);
+}
+
+.site-machines-technology-header h2 {
+  font-size: clamp(1.9rem, 3.2vw, 3.1rem);
+}
+
+.site-machines-stage-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 18px;
+}
+
+.site-machines-stage {
+  display: grid;
+  grid-template-columns: 56px minmax(220px, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(16px, 2vw, 24px);
+  padding: 10px 0;
+}
+
+.site-machines-stage-track {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+}
+
+.site-machines-stage-node {
+  position: relative;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  margin-top: 28px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #dcf636, #2f78ff);
+  box-shadow:
+    0 0 0 6px rgba(220, 246, 54, 0.08),
+    0 0 24px rgba(47, 120, 255, 0.24);
+}
+
+.site-machines-stage-line {
+  position: absolute;
+  top: 44px;
+  bottom: -18px;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, rgba(220, 246, 54, 0.3), rgba(47, 120, 255, 0.18));
+}
+
+.site-machines-stage-media {
+  overflow: hidden;
+  min-height: 190px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(180deg, rgba(12, 21, 41, 0.92), rgba(6, 11, 23, 0.98));
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 18px 34px rgba(0, 0, 0, 0.18);
+}
+
+.site-machines-stage-copy {
+  display: grid;
+  gap: 8px;
+  align-content: center;
+}
+
+.site-machines-stage-index {
+  color: rgba(242, 244, 248, 0.36);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.site-machines-stage-copy h3 {
+  margin: 0;
+  color: #f7f9ff;
+  font-size: clamp(1.45rem, 2vw, 1.86rem);
+  line-height: 1.08;
+}
+
+.site-machines-stage-copy p {
+  margin: 0;
+  color: rgba(242, 244, 248, 0.72);
+  line-height: 1.72;
+}
+
+.site-machines-feature-panel {
+  grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1fr);
+  gap: clamp(18px, 2.5vw, 26px);
+}
+
+.site-machines-feature-media {
+  border-radius: 24px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.site-machines-feature-media[role="img"] {
+  min-height: 280px;
+}
+
+.site-machines-feature-copy h2 {
+  font-size: clamp(1.85rem, 2.8vw, 2.7rem);
+}
+
+.site-machines-feature-list {
+  gap: 8px;
+}
+
+.site-machines-overview-section + .site-footer-wrapper,
+.site-machines-overview-section + .footer-live-root {
+  margin-top: 0 !important;
+}
+
+.site-machines-overview-section + .site-footer-wrapper .site-footer-inner,
+.site-machines-overview-section + .footer-live-root .site-footer-inner {
+  padding-top: 18px !important;
+}
+
+.site-machines-legacy-hidden {
+  display: none !important;
+}
+
+@media (max-width: 1199px) {
+  .site-machines-stage {
+    grid-template-columns: 42px minmax(200px, 0.82fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 809px) {
+  .site-machines-overview-section {
+    margin-block: 16px 12px;
+  }
+
+  .site-machines-highlight-list li {
+    max-width: none;
+    width: 100%;
+    border-radius: 18px;
+  }
+
+  .site-machines-stage-list {
+    gap: 14px;
+  }
+
+  .site-machines-stage {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .site-machines-stage-track {
+    display: none;
+  }
+
+  .site-machines-stage-media {
+    min-height: 150px;
+  }
+
+  .site-machines-feature-media[role="img"] {
+    min-height: 220px;
+  }
+}
